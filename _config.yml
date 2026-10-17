@@ -7,3 +7,4 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 exclude: [tools, "rhel8/roles", "rhel9/roles", "rhel10/roles", inventory, reports]
+google_site_verification: fUhaZl_2VhyeRqwT5fuCzFRRJCgB8ujbMTbpGtD844g
