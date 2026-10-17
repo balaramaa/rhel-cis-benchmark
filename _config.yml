@@ -1,5 +1,9 @@
-# GitHub Pages (optional website for search engines)
 title: CIS Benchmark for RHEL 8, RHEL 9 and RHEL 10
 description: Free one-command Ansible hardening that applies the CIS Benchmark to Red Hat Enterprise Linux, Rocky Linux and AlmaLinux 8, 9 and 10.
+url: https://balaramaa.github.io
+baseurl: /rhel-cis-benchmark
 theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
 exclude: [tools, "rhel8/roles", "rhel9/roles", "rhel10/roles", inventory, reports]
