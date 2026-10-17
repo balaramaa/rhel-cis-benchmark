@@ -1,0 +1,12 @@
+---
+# CIS Red Hat Enterprise Linux 8 Benchmark v4.0.0
+# Local:   sudo ./apply.sh
+# Remote:  ansible-playbook -i "server1,server2," playbook.yml -u admin -b
+- name: Apply CIS Red Hat Enterprise Linux 8 Benchmark v4.0.0
+  hosts: all
+  become: true
+  gather_facts: true
+  vars_files:
+    - settings.yml
+  roles:
+    - cis_rhel8

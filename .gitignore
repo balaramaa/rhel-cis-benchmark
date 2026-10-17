@@ -1,0 +1,11 @@
+# CIS benchmark PDFs are licensed by CIS - never commit them
+*.pdf
+reports/*
+!reports/.gitkeep
+inventory/hosts.yml
+inventory/group_vars/*.yml
+inventory/host_vars/
+dist/
+__pycache__/
+*.retry
+.venv/

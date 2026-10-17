@@ -1,0 +1,36 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "ansible-core>=2.14,<2.19" ansible-lint yamllint pyyaml
+      - name: Generated files are up to date
+        run: python3 tools/generate.py --check
+      - run: yamllint .
+      - run: make syntax
+      - run: ansible-lint
+      - run: shellcheck -S warning apply.sh rhel*/apply.sh
+
+  # Runs the exact command users run, inside EL containers (check mode).
+  apply-check:
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["8", "9", "10"]
+    container:
+      image: rockylinux/rockylinux:${{ matrix.os }}
+    steps:
+      - run: dnf -y install tar openssh-server audit authselect cronie
+      - uses: actions/checkout@v4
+      - name: sudo ./apply.sh --check
+        run: ./apply.sh --check --skip-section 1.1,1.3,1.4,3,4

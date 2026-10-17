@@ -1,0 +1,14 @@
+---
+# Copy to inventory/hosts.yml. Group names are up to you - site.yml detects the
+# RHEL version from facts, so mixed groups are fine.
+all:
+  children:
+    webservers:
+      hosts:
+        web01.example.com:   # RHEL 9
+        web02.example.com:   # RHEL 10
+    databases:
+      hosts:
+        db01.example.com:    # RHEL 8
+  vars:
+    ansible_user: admin

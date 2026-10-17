@@ -1,0 +1,10 @@
+# Managed by Ansible - CIS remote logging
+{% if rhel10cis_rsyslog_tls | bool %}
+global(DefaultNetstreamDriverCAFile="{{ rhel10cis_rsyslog_tls_ca }}")
+{% endif %}
+*.* action(type="omfwd" target="{{ rhel10cis_rsyslog_remote_host }}" port="{{ rhel10cis_rsyslog_remote_port }}" protocol="{{ rhel10cis_rsyslog_remote_protocol }}"
+{% if rhel10cis_rsyslog_tls | bool %}
+           StreamDriver="gtls" StreamDriverMode="1" StreamDriverAuthMode="x509/name"
+{% endif %}
+           action.resumeRetryCount="100"
+           queue.type="LinkedList" queue.size="1000")

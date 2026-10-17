@@ -1,0 +1,53 @@
+---
+# Many servers from one Ansible machine (mixed RHEL 8 / 9 / 10 is fine).
+# Each host gets ONLY the benchmark for its own version.
+#
+#   ansible-playbook -i inventory/hosts.yml site.yml --check --diff     # dry run
+#   ansible-playbook -i inventory/hosts.yml site.yml                    # apply
+#
+# For a single server, simply run  sudo ./apply.sh  on it instead.
+- name: Detect RHEL major version
+  hosts: "{{ cis_target | default('all') }}"
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Group hosts by RHEL major version
+      ansible.builtin.group_by:
+        key: "cis_el{{ ansible_facts.distribution_major_version }}"
+      when: ansible_facts.os_family == 'RedHat'
+      tags: [always]
+
+    - name: Warn about unsupported hosts
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }} runs {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }} - no CIS role for it, skipping."
+      when: >-
+        ansible_facts.os_family != 'RedHat' or
+        ansible_facts.distribution_major_version not in ['8', '9', '10']
+      tags: [always]
+
+- name: CIS RHEL 8 Benchmark v4.0.0
+  hosts: cis_el8
+  become: true
+  gather_facts: false
+  vars_files:
+    - rhel8/settings.yml
+  roles:
+    - cis_rhel8
+
+- name: CIS RHEL 9 Benchmark v3.0.0
+  hosts: cis_el9
+  become: true
+  gather_facts: false
+  vars_files:
+    - rhel9/settings.yml
+  roles:
+    - cis_rhel9
+
+- name: CIS RHEL 10 Benchmark v1.0.1
+  hosts: cis_el10
+  become: true
+  gather_facts: false
+  vars_files:
+    - rhel10/settings.yml
+  roles:
+    - cis_rhel10

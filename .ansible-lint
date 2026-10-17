@@ -1,0 +1,15 @@
+---
+profile: production
+exclude_paths:
+  - .github/
+  - tools/
+  - dist/
+skip_list:
+  - name[template]          # task names include rule IDs and variables by design
+  - var-naming[no-role-prefix]  # role vars use rhelNcis_ prefix (version-specific)
+  - command-instead-of-shell
+  - risky-shell-pipe
+  - no-changed-when         # handled with changed_when on every script
+  - yaml[line-length]
+warn_list:
+  - experimental

@@ -1,0 +1,2471 @@
+{
+ "benchmark": "CIS Red Hat Enterprise Linux 9 Benchmark",
+ "version": "v3.0.0",
+ "rhel": 9,
+ "rules": [
+  {
+   "id": "1.1.1.1",
+   "title": "Ensure cramfs kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.1.2",
+   "title": "Ensure freevxfs kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.1.3",
+   "title": "Ensure hfs kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.1.4",
+   "title": "Ensure hfsplus kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.1.5",
+   "title": "Ensure jffs2 kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.1.6",
+   "title": "Ensure overlay kernel module is not available",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.1.7",
+   "title": "Ensure squashfs kernel module is not available",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.1.8",
+   "title": "Ensure udf kernel module is not available",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.1.9",
+   "title": "Ensure firewire-core kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.1.10",
+   "title": "Ensure usb-storage kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.1.11",
+   "title": "Ensure unused filesystems kernel modules are not available",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.1.1",
+   "title": "Ensure /tmp is tmpfs or a separate partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.1.2",
+   "title": "Ensure nodev option set on /tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.1.3",
+   "title": "Ensure nosuid option set on /tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.1.4",
+   "title": "Ensure noexec option set on /tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.2.1",
+   "title": "Ensure /dev/shm is tmpfs or a separate partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.2.2",
+   "title": "Ensure nodev option set on /dev/shm partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.2.3",
+   "title": "Ensure nosuid option set on /dev/shm partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.2.4",
+   "title": "Ensure noexec option set on /dev/shm partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.3.1",
+   "title": "Ensure separate partition exists for /home",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.2.3.2",
+   "title": "Ensure nodev option set on /home partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.3.3",
+   "title": "Ensure nosuid option set on /home partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.4.1",
+   "title": "Ensure separate partition exists for /var",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.2.4.2",
+   "title": "Ensure nodev option set on /var partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.4.3",
+   "title": "Ensure nosuid option set on /var partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.5.1",
+   "title": "Ensure separate partition exists for /var/tmp",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.2.5.2",
+   "title": "Ensure nodev option set on /var/tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.5.3",
+   "title": "Ensure nosuid option set on /var/tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.5.4",
+   "title": "Ensure noexec option set on /var/tmp partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.6.1",
+   "title": "Ensure separate partition exists for /var/log",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.2.6.2",
+   "title": "Ensure nodev option set on /var/log partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.6.3",
+   "title": "Ensure nosuid option set on /var/log partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.6.4",
+   "title": "Ensure noexec option set on /var/log partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.7.1",
+   "title": "Ensure separate partition exists for /var/log/audit",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.1.2.7.2",
+   "title": "Ensure nodev option set on /var/log/audit partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.7.3",
+   "title": "Ensure nosuid option set on /var/log/audit partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.1.2.7.4",
+   "title": "Ensure noexec option set on /var/log/audit partition",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.2.1.1",
+   "title": "Ensure GPG keys are configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.2.1.2",
+   "title": "Ensure gpgcheck is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.2.1.3",
+   "title": "Ensure repo_gpgcheck is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.2.1.4",
+   "title": "Ensure package manager repositories are configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.2.1.5",
+   "title": "Ensure weak dependencies are configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.2.2.1",
+   "title": "Ensure updates, patches, and additional security software are installed",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.1",
+   "title": "Ensure SELinux is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.2",
+   "title": "Ensure SELinux is not disabled in bootloader configuration",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.3",
+   "title": "Ensure SELinux policy is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.4",
+   "title": "Ensure the SELinux mode is not disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.5",
+   "title": "Ensure the SELinux mode is enforcing",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.3.1.6",
+   "title": "Ensure no unconfined services exist",
+   "type": "manual",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.3.1.7",
+   "title": "Ensure the MCS Translation Service (mcstrans) is not installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.3.1.8",
+   "title": "Ensure SETroubleshoot is not installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "1.4.1",
+   "title": "Ensure bootloader password is set",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.4.2",
+   "title": "Ensure access to bootloader config is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.4.3",
+   "title": "Ensure authentication is required when booting into rescue mode",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.4.4",
+   "title": "Ensure authentication is required when booting into emergency mode",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.4.5",
+   "title": "Ensure systemd ability to spawn an interactive boot process is disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.1",
+   "title": "Ensure fs.protected_hardlinks is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.2",
+   "title": "Ensure fs.protected_symlinks is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.5.3",
+   "title": "Ensure fs.suid_dumpable is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.4",
+   "title": "Ensure kernel.dmesg_restrict is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.5",
+   "title": "Ensure kernel.kptr_restrict is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.6",
+   "title": "Ensure kernel.randomize_va_space is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.7",
+   "title": "Ensure kernel.yama.ptrace_scope is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.8",
+   "title": "Ensure core file size is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.9",
+   "title": "Ensure systemd-coredump ProcessSizeMax is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.5.10",
+   "title": "Ensure systemd-coredump Storage is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.1",
+   "title": "Ensure system wide crypto policy is not legacy",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.2",
+   "title": "Ensure system wide crypto policy disables sha1 hash and signature support",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.3",
+   "title": "Ensure system wide crypto policy macs are configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.4",
+   "title": "Ensure system wide crypto policy disables cbc for ssh",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.5",
+   "title": "Ensure system wide crypto policy disables chacha20poly1305 for ssh",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.6",
+   "title": "Ensure system wide crypto policy disables EtM for ssh",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.6.7",
+   "title": "Ensure system wide crypto policy enables post-quantum algorithms",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "1.7.1",
+   "title": "Ensure /etc/motd is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.7.2",
+   "title": "Ensure /etc/issue is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.7.3",
+   "title": "Ensure /etc/issue.net is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.7.4",
+   "title": "Ensure access to /etc/motd is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.7.5",
+   "title": "Ensure access to /etc/issue is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.7.6",
+   "title": "Ensure access to /etc/issue.net is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.1",
+   "title": "Ensure GDM login banner is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.2",
+   "title": "Ensure GDM disable-user-list is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.3",
+   "title": "Ensure GDM screen lock is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.4",
+   "title": "Ensure GDM automount is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "1.8.5",
+   "title": "Ensure GDM autorun-never is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.6",
+   "title": "Ensure XDMCP is not enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "1.8.7",
+   "title": "Ensure Wayland is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.1",
+   "title": "Ensure autofs services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "2.1.2",
+   "title": "Ensure avahi daemon services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "2.1.3",
+   "title": "Ensure cockpit web services are not in use",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "2.1.4",
+   "title": "Ensure dhcp server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.5",
+   "title": "Ensure dns server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.6",
+   "title": "Ensure dnsmasq services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.7",
+   "title": "Ensure samba file server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.8",
+   "title": "Ensure ftp server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.9",
+   "title": "Ensure message access server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.10",
+   "title": "Ensure network file system services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.11",
+   "title": "Ensure print server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "2.1.12",
+   "title": "Ensure rpcbind services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.13",
+   "title": "Ensure rsync services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.14",
+   "title": "Ensure snmp services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.15",
+   "title": "Ensure telnet server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.16",
+   "title": "Ensure tftp server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.17",
+   "title": "Ensure web proxy server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.18",
+   "title": "Ensure web server services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.19",
+   "title": "Ensure mail transfer agents are configured for local-only mode",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.1.20",
+   "title": "Ensure a graphical user interface is not in use",
+   "type": "automated",
+   "server": 2,
+   "workstation": null
+  },
+  {
+   "id": "2.1.21",
+   "title": "Ensure X window server services are not in use",
+   "type": "automated",
+   "server": 2,
+   "workstation": null
+  },
+  {
+   "id": "2.1.22",
+   "title": "Ensure Xwayland is not in use",
+   "type": "automated",
+   "server": 2,
+   "workstation": null
+  },
+  {
+   "id": "2.1.23",
+   "title": "Ensure only approved services are listening on a network interface",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.2.1",
+   "title": "Ensure ftp client is not installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.2.2",
+   "title": "Ensure ldap client is not installed",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "2.2.3",
+   "title": "Ensure telnet client is not installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.2.4",
+   "title": "Ensure tftp client is not installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.3.1",
+   "title": "Ensure time synchronization is in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.3.2",
+   "title": "Ensure chrony is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.3.3",
+   "title": "Ensure chrony is not run as the root user",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.1",
+   "title": "Ensure cron daemon is enabled and active",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.2",
+   "title": "Ensure access to /etc/crontab is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.3",
+   "title": "Ensure access to /etc/cron.hourly is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.4",
+   "title": "Ensure access to /etc/cron.daily is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.5",
+   "title": "Ensure access to /etc/cron.weekly is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.6",
+   "title": "Ensure access to /etc/cron.monthly is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.7",
+   "title": "Ensure access to /etc/cron.yearly is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.8",
+   "title": "Ensure access to /etc/cron.d is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.1.9",
+   "title": "Ensure access to crontab is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "2.4.2.1",
+   "title": "Ensure access to at is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.1.1",
+   "title": "Ensure IPv6 status is identified",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.1.2",
+   "title": "Ensure wireless interfaces are not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "3.1.3",
+   "title": "Ensure bluetooth services are not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 2
+  },
+  {
+   "id": "3.2.1",
+   "title": "Ensure dccp kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.2.2",
+   "title": "Ensure tipc kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.2.3",
+   "title": "Ensure rds kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.2.4",
+   "title": "Ensure sctp kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.2.5",
+   "title": "Ensure atm kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.2.6",
+   "title": "Ensure can kernel module is not available",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.1",
+   "title": "Ensure net.ipv4.ip_forward is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.2",
+   "title": "Ensure net.ipv4.conf.all.forwarding is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.3",
+   "title": "Ensure net.ipv4.conf.default.forwarding is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.4",
+   "title": "Ensure net.ipv4.conf.all.send_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.5",
+   "title": "Ensure net.ipv4.conf.default.send_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.6",
+   "title": "Ensure net.ipv4.icmp_ignore_bogus_error_responses is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.7",
+   "title": "Ensure net.ipv4.icmp_echo_ignore_broadcasts is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.8",
+   "title": "Ensure net.ipv4.conf.all.accept_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.9",
+   "title": "Ensure net.ipv4.conf.default.accept_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.10",
+   "title": "Ensure net.ipv4.conf.all.secure_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.11",
+   "title": "Ensure net.ipv4.conf.default.secure_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.12",
+   "title": "Ensure net.ipv4.conf.all.rp_filter is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.13",
+   "title": "Ensure net.ipv4.conf.default.rp_filter is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.14",
+   "title": "Ensure net.ipv4.conf.all.accept_source_route is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.15",
+   "title": "Ensure net.ipv4.conf.default.accept_source_route is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.16",
+   "title": "Ensure net.ipv4.conf.all.log_martians is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.17",
+   "title": "Ensure net.ipv4.conf.default.log_martians is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.18",
+   "title": "Ensure net.ipv4.tcp_syncookies is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.19",
+   "title": "Ensure net.ipv4.conf.all.route_localnet is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.1.20",
+   "title": "Ensure net.ipv4.conf.default.route_localnet is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.1",
+   "title": "Ensure net.ipv6.conf.all.forwarding is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.2",
+   "title": "Ensure net.ipv6.conf.default.forwarding is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.3",
+   "title": "Ensure net.ipv6.conf.all.accept_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.4",
+   "title": "Ensure net.ipv6.conf.default.accept_redirects is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.5",
+   "title": "Ensure net.ipv6.conf.all.accept_source_route is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.6",
+   "title": "Ensure net.ipv6.conf.default.accept_source_route is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.7",
+   "title": "Ensure net.ipv6.conf.all.accept_ra is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "3.3.2.8",
+   "title": "Ensure net.ipv6.conf.default.accept_ra is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.1",
+   "title": "Ensure firewalld is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.2",
+   "title": "Ensure firewalld backend is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.3",
+   "title": "Ensure firewalld.service is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.4",
+   "title": "Ensure firewalld active zone target is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.5",
+   "title": "Ensure firewalld loopback traffic is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.6",
+   "title": "Ensure firewalld loopback source address traffic is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.7",
+   "title": "Ensure firewalld services and ports are configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.8",
+   "title": "Ensure firewalld default zone is set to drop",
+   "type": "manual",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "4.1.9",
+   "title": "Ensure conflicting firewall utilities are not in use with firewalld",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "4.1.10",
+   "title": "Ensure firewalld logs denied packets",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "4.1.11",
+   "title": "Ensure firewalld blocks ICMP timestamp requests and replies",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "5.1.1",
+   "title": "Ensure access to /etc/ssh/sshd_config is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.2",
+   "title": "Ensure access to /etc/ssh/sshd_config.d/ directory is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.3",
+   "title": "Ensure access to SSH private host key files is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.4",
+   "title": "Ensure access to SSH public host key files is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.5",
+   "title": "Ensure sshd Ciphers are configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.6",
+   "title": "Ensure sshd KexAlgorithms is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.7",
+   "title": "Ensure sshd MACs are configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.8",
+   "title": "Ensure sshd access is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.9",
+   "title": "Ensure sshd Banner is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.10",
+   "title": "Ensure sshd ClientAliveInterval and ClientAliveCountMax are configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.11",
+   "title": "Ensure sshd DisableForwarding is enabled",
+   "type": "automated",
+   "server": 2,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.12",
+   "title": "Ensure sshd GSSAPIAuthentication is disabled",
+   "type": "automated",
+   "server": 2,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.13",
+   "title": "Ensure sshd HostbasedAuthentication is disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.14",
+   "title": "Ensure sshd IgnoreRhosts is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.15",
+   "title": "Ensure sshd LoginGraceTime is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.16",
+   "title": "Ensure sshd LogLevel is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.17",
+   "title": "Ensure sshd MaxAuthTries is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.18",
+   "title": "Ensure sshd MaxStartups is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.19",
+   "title": "Ensure sshd MaxSessions is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.20",
+   "title": "Ensure sshd PermitEmptyPasswords is disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.21",
+   "title": "Ensure sshd PermitRootLogin is disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.22",
+   "title": "Ensure sshd PermitUserEnvironment is disabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.1.23",
+   "title": "Ensure sshd UsePAM is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.1",
+   "title": "Ensure sudo is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.2",
+   "title": "Ensure access on sudoers configuration files is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "5.2.3",
+   "title": "Ensure access on the /etc/sudoers.d directory is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "5.2.4",
+   "title": "Ensure sudo commands use pty",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.5",
+   "title": "Ensure sudo log file exists",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.6",
+   "title": "Ensure users must provide password for escalation",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "5.2.7",
+   "title": "Ensure re-authentication for privilege escalation is not disabled globally",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.8",
+   "title": "Ensure sudo pwfeedback is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "5.2.9",
+   "title": "Ensure sudo visiblepw is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "5.2.10",
+   "title": "Ensure sudo timestamp_timeout is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.2.11",
+   "title": "Ensure sudo timestamp_type is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": null
+  },
+  {
+   "id": "5.2.12",
+   "title": "Ensure access to the su command is restricted",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.1.1",
+   "title": "Ensure latest version of pam is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.1.2",
+   "title": "Ensure latest version of authselect is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.1.3",
+   "title": "Ensure latest version of libpwquality is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.2.1",
+   "title": "Ensure PAM is managed by an active authselect profile",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.2.2",
+   "title": "Ensure pam_faillock module is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.2.3",
+   "title": "Ensure pam_pwquality module is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.2.4",
+   "title": "Ensure pam_pwhistory module is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.2.5",
+   "title": "Ensure pam_unix module is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.1.1",
+   "title": "Ensure password failed attempts lockout is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.1.2",
+   "title": "Ensure password unlock time is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.1.3",
+   "title": "Ensure password failed attempts lockout includes root account",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "5.3.3.2.1",
+   "title": "Ensure password number of changed characters is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.2",
+   "title": "Ensure password length is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.3",
+   "title": "Ensure password complexity is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.4",
+   "title": "Ensure password same consecutive characters is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.5",
+   "title": "Ensure password maximum sequential characters is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.6",
+   "title": "Ensure password dictionary check is enabled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.2.7",
+   "title": "Ensure password quality is enforced for the root user",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.3.1",
+   "title": "Ensure password history remember is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.3.2",
+   "title": "Ensure password history is enforced for the root user",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.3.3",
+   "title": "Ensure pam_pwhistory includes use_authtok",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.4.1",
+   "title": "Ensure pam_unix does not include nullok",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.4.2",
+   "title": "Ensure pam_unix does not include remember",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.4.3",
+   "title": "Ensure pam_unix includes a strong password hashing algorithm",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.3.3.4.4",
+   "title": "Ensure pam_unix includes use_authtok",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.1.1",
+   "title": "Ensure password expiration is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.1.2",
+   "title": "Ensure minimum password days is configured",
+   "type": "manual",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "5.4.1.3",
+   "title": "Ensure password expiration warning days is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.1.4",
+   "title": "Ensure strong password hashing algorithm is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.1.5",
+   "title": "Ensure inactive password lock is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.1.6",
+   "title": "Ensure all users last password change date is in the past",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.1",
+   "title": "Ensure root is the only UID 0 account",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.2",
+   "title": "Ensure root is the only GID 0 account",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.3",
+   "title": "Ensure group root is the only GID 0 group",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.4",
+   "title": "Ensure root account access is controlled",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.5",
+   "title": "Ensure root path integrity",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.6",
+   "title": "Ensure root user umask is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.7",
+   "title": "Ensure system accounts do not have a valid login shell",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.2.8",
+   "title": "Ensure accounts without a valid login shell are locked",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.3.1",
+   "title": "Ensure nologin is not listed in /etc/shells",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "5.4.3.2",
+   "title": "Ensure default user shell timeout is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.3.3",
+   "title": "Ensure default user umask is configured in /etc/login.defs",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "5.4.3.4",
+   "title": "Ensure default user umask is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.1.1",
+   "title": "Ensure journald service is active",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.1.2",
+   "title": "Ensure systemd-journal-remote is not in use",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.1.3",
+   "title": "Ensure journald is configured to send logs to rsyslog",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.1.4",
+   "title": "Ensure journald log file rotation is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.1.5",
+   "title": "Ensure journald log file access is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.1",
+   "title": "Ensure rsyslog is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.2",
+   "title": "Ensure rsyslog service is enabled and active",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.3",
+   "title": "Ensure rsyslog log file creation mode is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.4",
+   "title": "Ensure access to rsyslog configuration files is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.5",
+   "title": "Ensure access to the /etc/rsyslog.d directory is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.6",
+   "title": "Ensure access to the rsyslog work directory is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.7",
+   "title": "Ensure rsyslog is not configured as a log server",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.8",
+   "title": "Ensure rsyslog logging rules are configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.9",
+   "title": "Ensure rsyslog is configured to send logs to a remote log host",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.2.10",
+   "title": "Ensure a rsyslog TLS network stream driver is installed",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.1.2.11",
+   "title": "Ensure rsyslog network forwarding uses TLS",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.1.2.12",
+   "title": "Ensure rsyslog TLS CA certificate is configured",
+   "type": "manual",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.1.2.13",
+   "title": "Ensure rsyslog TLS client certificate is configured",
+   "type": "manual",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.1.2.14",
+   "title": "Ensure logrotate is configured",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.1.3.1",
+   "title": "Ensure access to all logfiles has been configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.2.1.1",
+   "title": "Ensure auditd packages are installed",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.1.2",
+   "title": "Ensure auditing for processes that start prior to auditd is enabled",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.1.3",
+   "title": "Ensure audit_backlog_limit is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.1.4",
+   "title": "Ensure auditd service is enabled and active",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.2.1",
+   "title": "Ensure audit log storage size is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.2.2",
+   "title": "Ensure audit logs are not automatically deleted",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.2.3",
+   "title": "Ensure system is disabled when audit logs are full",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.2.4",
+   "title": "Ensure system warns when audit logs are low on space",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.1",
+   "title": "Ensure modification of the /etc/sudoers file is collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.2",
+   "title": "Ensure actions as another user are always logged",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.3",
+   "title": "Ensure events that modify the sudo log file are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.4",
+   "title": "Ensure events that modify date and time information are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.5",
+   "title": "Ensure events that modify sethostname and setdomainname are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.6",
+   "title": "Ensure events that modify /etc/issue and /etc/issue.net are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.7",
+   "title": "Ensure events that modify /etc/hosts and /etc/hostname are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.8",
+   "title": "Ensure events that modify /etc/sysconfig/network and /etc/NetworkManager/system-connections/ are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.9",
+   "title": "Ensure events that modify /etc/NetworkManager directory are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.10",
+   "title": "Ensure use of privileged commands are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.11",
+   "title": "Ensure unsuccessful file access attempts are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.12",
+   "title": "Ensure events that modify /etc/group information are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.13",
+   "title": "Ensure events that modify /etc/passwd information are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.14",
+   "title": "Ensure events that modify /etc/shadow and /etc/gshadow are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.15",
+   "title": "Ensure events that modify /etc/security/opasswd are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.16",
+   "title": "Ensure events that modify /etc/nsswitch.conf file are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.17",
+   "title": "Ensure events that modify /etc/pam.conf and /etc/pam.d/ information are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.18",
+   "title": "Ensure discretionary access control permission modification events chmod,fchmod,fchmodat are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.19",
+   "title": "Ensure discretionary access control permission modification events chown,fchown,lchown,fchownat are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.20",
+   "title": "Ensure discretionary access control permission modification events setxattr,lsetxattr,fsetxattr,removexattr,lremovexattr,fremovexattr collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.21",
+   "title": "Ensure successful file system mounts are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.22",
+   "title": "Ensure session initiation information is collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.23",
+   "title": "Ensure login and logout events are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.24",
+   "title": "Ensure unlink file deletion events by users are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.25",
+   "title": "Ensure rename file deletion events by users are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.26",
+   "title": "Ensure events that modify the system's Mandatory Access Controls are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.27",
+   "title": "Ensure successful and unsuccessful attempts to use the chcon command are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.28",
+   "title": "Ensure successful and unsuccessful attempts to use the setfacl command are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.29",
+   "title": "Ensure successful and unsuccessful attempts to use the chacl command are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.30",
+   "title": "Ensure successful and unsuccessful attempts to use the usermod command are collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.31",
+   "title": "Ensure kernel module loading unloading and modification is collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.32",
+   "title": "Ensure kernel \"init_module\" and \"finit_module\" loading unloading and modification is collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.33",
+   "title": "Ensure kernel \"delete_module\" loading unloading and modification is collected",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.34",
+   "title": "Ensure the audit configuration is loaded regardless of errors",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.35",
+   "title": "Ensure the audit configuration is immutable",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.3.36",
+   "title": "Ensure the running and on disk configuration is the same",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.1",
+   "title": "Ensure the audit log file directory mode is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.2",
+   "title": "Ensure audit log files mode is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.3",
+   "title": "Ensure audit log files owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.4",
+   "title": "Ensure audit log files group owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.5",
+   "title": "Ensure audit configuration files mode is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.6",
+   "title": "Ensure audit configuration files owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.7",
+   "title": "Ensure audit configuration files group owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.8",
+   "title": "Ensure audit tools mode is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.9",
+   "title": "Ensure audit tools owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.2.4.10",
+   "title": "Ensure audit tools group owner is configured",
+   "type": "automated",
+   "server": 2,
+   "workstation": 2
+  },
+  {
+   "id": "6.3.1",
+   "title": "Ensure AIDE is installed",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.3.2",
+   "title": "Ensure filesystem integrity is regularly checked",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.3.3",
+   "title": "Ensure cryptographic mechanisms are used to protect the integrity of audit tools",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "6.3.4",
+   "title": "Ensure report_url is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.1",
+   "title": "Ensure access to /etc/passwd is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.2",
+   "title": "Ensure access to /etc/passwd- is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.3",
+   "title": "Ensure access to /etc/group is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.4",
+   "title": "Ensure access to /etc/group- is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.5",
+   "title": "Ensure access to /etc/shadow is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.6",
+   "title": "Ensure access to /etc/shadow- is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.7",
+   "title": "Ensure access to /etc/gshadow is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.8",
+   "title": "Ensure access to /etc/gshadow- is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.9",
+   "title": "Ensure access to /etc/shells is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.10",
+   "title": "Ensure access to /etc/security/opasswd is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.11",
+   "title": "Ensure world writable files and directories are secured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.12",
+   "title": "Ensure no files or directories without an owner and a group exist",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.1.13",
+   "title": "Ensure SUID and SGID files are reviewed",
+   "type": "manual",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.1",
+   "title": "Ensure accounts in /etc/passwd use shadowed passwords",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.2",
+   "title": "Ensure /etc/shadow password fields are not empty",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.3",
+   "title": "Ensure all groups in /etc/passwd exist in /etc/group",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.4",
+   "title": "Ensure no duplicate UIDs exist",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.5",
+   "title": "Ensure no duplicate GIDs exist",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.6",
+   "title": "Ensure no duplicate user names exist",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.7",
+   "title": "Ensure no duplicate group names exist",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.8",
+   "title": "Ensure local interactive user home directories are configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  },
+  {
+   "id": "7.2.9",
+   "title": "Ensure local interactive user dot files access is configured",
+   "type": "automated",
+   "server": 1,
+   "workstation": 1
+  }
+ ]
+}

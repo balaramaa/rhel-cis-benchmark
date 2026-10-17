@@ -1,0 +1,45 @@
+---
+# =============================================================================
+#  Your settings for the CIS Red Hat Enterprise Linux 9 Benchmark v3.0.0.
+#  Edit as needed, then run:  sudo ./apply.sh
+#  Every available option (with defaults) is in roles/cis_rhel9/defaults/main.yml
+# =============================================================================
+
+# Level 1 = essential hardening, Level 2 = stricter (includes Level 1)
+rhel9cis_level: 1
+
+# server or workstation
+rhel9cis_profile: server
+
+# Controls to skip permanently (IDs from CONTROLS.md), e.g. ["1.1.1.6", "5.1.21"]
+rhel9cis_skip_rules: []
+
+# Sections to skip, e.g. ["1.1.2"] (partitions) or ["6"] (logging and auditing)
+rhel9cis_skip_sections: []
+
+# --- SSH ---------------------------------------------------------------------
+# Control 5.1.8: only these groups may log in over SSH. Recommended: [wheel]
+# Left empty by default so nobody is locked out.
+rhel9cis_sshd_allowgroups: []
+# Control 5.1.21: "no" disables root SSH login (CIS). Change only if you must.
+rhel9cis_sshd_permit_root_login: "no"
+
+# --- Firewall ----------------------------------------------------------------
+# Services kept open when firewalld is enabled (add http, https, ... as needed)
+rhel9cis_firewalld_allowed_services: [ssh]
+
+# --- Services ----------------------------------------------------------------
+# "mask" stops and masks unneeded services, "remove" uninstalls their packages
+rhel9cis_service_remediation: mask
+
+# --- Passwords ---------------------------------------------------------------
+rhel9cis_pwquality_minlen: 14
+rhel9cis_pass_max_days: 365
+
+# --- Logging -----------------------------------------------------------------
+# Central log server (leave empty if you have none)
+rhel9cis_rsyslog_remote_host: ""
+
+# --- Boot loader -------------------------------------------------------------
+# Paste the output of  grub2-mkpasswd-pbkdf2  to set a GRUB password
+rhel9cis_bootloader_password_hash: ""
