@@ -501,6 +501,8 @@
         line: inet_interfaces = loopback-only
       when: "'postfix' in ansible_facts.packages"
       notify: rhel9cis restart postfix
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 2.1.19 | AUDIT | Collect evidence
       ansible.builtin.shell:
         cmd: ss -plntu | grep -P ':(25|465|587)\b' | grep -Pv '\h+(127\.0\.0\.1|\[?::1\]?):(25|465|587)\b' || true
@@ -690,6 +692,8 @@
         path: /etc/sysconfig/chronyd
         regexp: -u\s+root\s*
       notify: rhel9cis restart chronyd
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 2.4.1.1 | Ensure cron daemon is enabled and active
   when: "'2.4.1.1' in rhel9cis_active_rules"
   tags:

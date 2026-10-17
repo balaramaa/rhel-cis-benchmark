@@ -303,7 +303,7 @@ def _ini_to_builtin(task):
     t = {"name": task["name"],
          "ansible.builtin.lineinfile": {"path": a["path"], "regexp": f"^\\s*#?\\s*{opt_rx}\\s*=",
                                         "line": f"{opt}={a['value']}", "insertafter": f"^\\[{sec}\\]\\s*$",
-                                        "firstmatch": True}}
+                                        "firstmatch": True, "create": True, "mode": mode}}
     t.update(keep)
     return [ensure, t]
 
@@ -348,5 +348,48 @@ def builtinize(tasks, prefix):
         elif "ansible.posix.sysctl" in t:
             out.extend(_sysctl_to_builtin(t, prefix))
         else:
-            out.append(t)
+            out.extend(_harden(t))
+    return out
+
+
+# Directories that always exist on EL8/9/10 - no need to create them.
+_STD_DIRS = {"/etc", "/etc/modprobe.d", "/etc/audit/rules.d", "/etc/profile.d", "/etc/security/limits.d",
+             "/etc/crypto-policies/policies/modules", "/etc/systemd/system", "/etc/sudoers.d", "/etc/rsyslog.d",
+             "/root", "/etc/security"}
+_EDIT_MODULES = ("ansible.builtin.replace", "ansible.builtin.blockinfile", "ansible.builtin.lineinfile")
+
+
+def _harden(t):
+    """Make a task safe when its target file or directory does not exist yet."""
+    out = []
+    cp = t.get("ansible.builtin.copy")
+    if cp and isinstance(cp.get("dest"), str) and "{{" not in cp["dest"]:
+        d = cp["dest"].rsplit("/", 1)[0]
+        if d not in _STD_DIRS:
+            mk = {"name": t["name"] + " (directory)",
+                  "ansible.builtin.file": {"path": d, "state": "directory", "owner": "root", "group": "root",
+                                           "mode": "0755"}}
+            if "when" in t:
+                mk["when"] = t["when"]
+            out.append(mk)
+            # In --check mode the directory above is only simulated, so copy cannot see it.
+            t = dict(t)
+            reg = t.get("register", "cis_copy_result")
+            t["register"] = reg
+            t["failed_when"] = (f"{reg} is failed and not (ansible_check_mode and "
+                                f"'does not exist' in ({reg}.msg | default('')))")
+    for mod in _EDIT_MODULES:
+        a = t.get(mod)
+        if not a:
+            continue
+        if mod == "ansible.builtin.lineinfile" and a.get("create"):
+            break
+        # Editing a file that does not exist (package not installed, or created earlier in a
+        # --check run) is "not applicable", not an error.
+        t = dict(t)
+        reg = t.get("register", "cis_edit_result")
+        t["register"] = reg
+        t["failed_when"] = f"{reg} is failed and 'does not exist' not in ({reg}.msg | default(''))"
+        break
+    out.append(t)
     return out

@@ -353,6 +353,8 @@
         - rhel8cis_fstab_1_1_2_1_2.rc == 0
         - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.1.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.1.2', 'title': 'Ensure nodev option set on /tmp partition', 'type': 'info', 'detail': ['/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -381,6 +383,8 @@
         - rhel8cis_fstab_1_1_2_1_3.rc == 0
         - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.1.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.1.3', 'title': 'Ensure nosuid option set on /tmp partition', 'type': 'info', 'detail': ['/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -409,6 +413,8 @@
         - rhel8cis_fstab_1_1_2_1_4.rc == 0
         - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.1.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.1.4', 'title': 'Ensure noexec option set on /tmp partition', 'type': 'info', 'detail': ['/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -447,6 +453,8 @@
         line: tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0
       when: rhel8cis_fstab_1_1_2_2_2_shm.rc == 1
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.2 | AUDIT | Check that /dev/shm is an fstab entry
       ansible.builtin.command: grep -Eq '^\s*[^#[:space:]]+\s+/dev/shm\s' /etc/fstab
       register: rhel8cis_fstab_1_1_2_2_2
@@ -462,6 +470,8 @@
         - rhel8cis_fstab_1_1_2_2_2.rc == 0
         - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.2.2', 'title': 'Ensure nodev option set on /dev/shm partition', 'type': 'info', 'detail': ['/dev/shm is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -487,6 +497,8 @@
         line: tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0
       when: rhel8cis_fstab_1_1_2_2_3_shm.rc == 1
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.3 | AUDIT | Check that /dev/shm is an fstab entry
       ansible.builtin.command: grep -Eq '^\s*[^#[:space:]]+\s+/dev/shm\s' /etc/fstab
       register: rhel8cis_fstab_1_1_2_2_3
@@ -502,6 +514,8 @@
         - rhel8cis_fstab_1_1_2_2_3.rc == 0
         - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.2.3', 'title': 'Ensure nosuid option set on /dev/shm partition', 'type': 'info', 'detail': ['/dev/shm is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -527,6 +541,8 @@
         line: tmpfs /dev/shm tmpfs defaults,nodev,nosuid,noexec 0 0
       when: rhel8cis_fstab_1_1_2_2_4_shm.rc == 1
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.4 | AUDIT | Check that /dev/shm is an fstab entry
       ansible.builtin.command: grep -Eq '^\s*[^#[:space:]]+\s+/dev/shm\s' /etc/fstab
       register: rhel8cis_fstab_1_1_2_2_4
@@ -542,6 +558,8 @@
         - rhel8cis_fstab_1_1_2_2_4.rc == 0
         - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /dev/shm
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.2.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.2.4', 'title': 'Ensure noexec option set on /dev/shm partition', 'type': 'info', 'detail': ['/dev/shm is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -583,6 +601,8 @@
         - rhel8cis_fstab_1_1_2_3_2.rc == 0
         - "'/home' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /home
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.3.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.3.2', 'title': 'Ensure nodev option set on /home partition', 'type': 'info', 'detail': ['/home is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -611,6 +631,8 @@
         - rhel8cis_fstab_1_1_2_3_3.rc == 0
         - "'/home' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /home
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.3.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.3.3', 'title': 'Ensure nosuid option set on /home partition', 'type': 'info', 'detail': ['/home is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -652,6 +674,8 @@
         - rhel8cis_fstab_1_1_2_4_2.rc == 0
         - "'/var' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.4.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.4.2', 'title': 'Ensure nodev option set on /var partition', 'type': 'info', 'detail': ['/var is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -680,6 +704,8 @@
         - rhel8cis_fstab_1_1_2_4_3.rc == 0
         - "'/var' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.4.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.4.3', 'title': 'Ensure nosuid option set on /var partition', 'type': 'info', 'detail': ['/var is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -721,6 +747,8 @@
         - rhel8cis_fstab_1_1_2_5_2.rc == 0
         - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.5.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.5.2', 'title': 'Ensure nodev option set on /var/tmp partition', 'type': 'info', 'detail': ['/var/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -749,6 +777,8 @@
         - rhel8cis_fstab_1_1_2_5_3.rc == 0
         - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.5.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.5.3', 'title': 'Ensure nosuid option set on /var/tmp partition', 'type': 'info', 'detail': ['/var/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -777,6 +807,8 @@
         - rhel8cis_fstab_1_1_2_5_4.rc == 0
         - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/tmp
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.5.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.5.4', 'title': 'Ensure noexec option set on /var/tmp partition', 'type': 'info', 'detail': ['/var/tmp is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -818,6 +850,8 @@
         - rhel8cis_fstab_1_1_2_6_2.rc == 0
         - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.6.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.6.2', 'title': 'Ensure nodev option set on /var/log partition', 'type': 'info', 'detail': ['/var/log is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -846,6 +880,8 @@
         - rhel8cis_fstab_1_1_2_6_3.rc == 0
         - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.6.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.6.3', 'title': 'Ensure nosuid option set on /var/log partition', 'type': 'info', 'detail': ['/var/log is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -874,6 +910,8 @@
         - rhel8cis_fstab_1_1_2_6_4.rc == 0
         - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.6.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.6.4', 'title': 'Ensure noexec option set on /var/log partition', 'type': 'info', 'detail': ['/var/log is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -915,6 +953,8 @@
         - rhel8cis_fstab_1_1_2_7_2.rc == 0
         - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log/audit
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.7.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.7.2', 'title': 'Ensure nodev option set on /var/log/audit partition', 'type': 'info', 'detail': ['/var/log/audit is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -943,6 +983,8 @@
         - rhel8cis_fstab_1_1_2_7_3.rc == 0
         - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log/audit
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.7.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.7.3', 'title': 'Ensure nosuid option set on /var/log/audit partition', 'type': 'info', 'detail': ['/var/log/audit is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -971,6 +1013,8 @@
         - rhel8cis_fstab_1_1_2_7_4.rc == 0
         - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
       notify: rhel8cis remount /var/log/audit
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.1.2.7.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '1.1.2.7.4', 'title': 'Ensure noexec option set on /var/log/audit partition', 'type': 'info', 'detail': ['/var/log/audit is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']}] }}"
@@ -1021,6 +1065,8 @@
         line: gpgcheck=1
         insertafter: ^\[main\]\s*$
         firstmatch: true
+        create: true
+        mode: '0644'
     - name: 1.2.1.2 | AUDIT | Find repo files
       ansible.builtin.find:
         paths: /etc/yum.repos.d
@@ -1034,6 +1080,8 @@
       loop: '{{ rhel8cis_repos_1_2_1_2.files }}'
       loop_control:
         label: '{{ item.path }}'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 1.2.1.3 | Ensure repo_gpgcheck is globally activated
   when: "'1.2.1.3' in rhel8cis_active_rules"
   tags:
@@ -1060,6 +1108,8 @@
         line: repo_gpgcheck=1
         insertafter: ^\[main\]\s*$
         firstmatch: true
+        create: true
+        mode: '0644'
       when: rhel8cis_enable_repo_gpgcheck | bool
     - name: 1.2.1.3 | Record finding
       ansible.builtin.set_fact:
@@ -1111,6 +1161,8 @@
         line: install_weak_deps=0
         insertafter: ^\[main\]\s*$
         firstmatch: true
+        create: true
+        mode: '0644'
 - name: 1.2.2.1 | Ensure updates, patches, and additional security software are installed
   when: "'1.2.2.1' in rhel8cis_active_rules"
   tags:
@@ -1180,6 +1232,8 @@
         path: /etc/default/grub
         regexp: \s*(selinux|enforcing)=0
       notify: rhel8cis grub2 mkconfig
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 1.3.1.3 | Ensure SELinux policy is configured
   when: "'1.3.1.3' in rhel8cis_active_rules"
   tags:
@@ -1198,6 +1252,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 1.3.1.4 | Ensure the SELinux mode is not disabled
   when: "'1.3.1.4' in rhel8cis_active_rules"
   tags:
@@ -1208,14 +1264,13 @@
     - level1_workstation
   block:
     - name: 1.3.1.4 | PATCH | Change SELINUX=disabled to permissive (reboot + relabel required)
-      ansible.builtin.lineinfile:
+      ansible.builtin.replace:
         path: /etc/selinux/config
-        regexp: ^\s*SELINUX=disabled
-        line: SELINUX=permissive
-        create: false
-        owner: root
-        group: root
-        mode: '0644'
+        regexp: ^(\s*)SELINUX=disabled\s*$
+        replace: \1SELINUX=permissive
+      notify: rhel8cis flag reboot
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 1.3.1.5 | Ensure the SELinux mode is enforcing
   when: "'1.3.1.5' in rhel8cis_active_rules"
   tags:
@@ -1234,6 +1289,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 1.3.1.5 | PATCH | Switch running mode to enforcing
       ansible.builtin.command: setenforce 1
       when: "ansible_facts.selinux.status == 'enabled' and ansible_facts.selinux.mode == 'permissive'"
@@ -1583,6 +1640,8 @@
         line: ProcessSizeMax=0
         insertafter: ^\[Coredump\]\s*$
         firstmatch: true
+        create: true
+        mode: '0644'
 - name: 1.5.10 | Ensure systemd-coredump Storage is configured
   when: "'1.5.10' in rhel8cis_active_rules"
   tags:
@@ -1608,6 +1667,8 @@
         line: Storage=none
         insertafter: ^\[Coredump\]\s*$
         firstmatch: true
+        create: true
+        mode: '0644'
 - name: 1.6.1 | Ensure system wide crypto policy is not set to legacy
   when: "'1.6.1' in rhel8cis_active_rules"
   tags:
@@ -1900,6 +1961,13 @@
     - name: 1.8.1 | GDM is installed
       when: "'gdm' in ansible_facts.packages"
       block:
+        - name: "1.8.1 | PATCH | dconf profile 'gdm' (directory)"
+          ansible.builtin.file:
+            path: /etc/dconf/profile
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: "1.8.1 | PATCH | dconf profile 'gdm'"
           ansible.builtin.copy:
             dest: /etc/dconf/profile/gdm
@@ -1908,6 +1976,15 @@
               system-db:gdm
               file-db:/usr/share/gdm/greeter-dconf-defaults
             mode: '0644'
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.1 | PATCH | Login banner (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/gdm.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.1 | PATCH | Login banner
           ansible.builtin.copy:
             dest: /etc/dconf/db/gdm.d/01-banner-message
@@ -1919,6 +1996,15 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.1 | PATCH | Lock settings (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/gdm.d/locks
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.1 | PATCH | Lock settings
           ansible.builtin.copy:
             dest: /etc/dconf/db/gdm.d/locks/01-banner-message
@@ -1929,6 +2015,8 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
 - name: 1.8.2 | Ensure GDM disable-user-list is configured
   when: "'1.8.2' in rhel8cis_active_rules"
   tags:
@@ -1941,6 +2029,13 @@
     - name: 1.8.2 | GDM is installed
       when: "'gdm' in ansible_facts.packages"
       block:
+        - name: "1.8.2 | PATCH | dconf profile 'gdm' (directory)"
+          ansible.builtin.file:
+            path: /etc/dconf/profile
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: "1.8.2 | PATCH | dconf profile 'gdm'"
           ansible.builtin.copy:
             dest: /etc/dconf/profile/gdm
@@ -1949,6 +2044,15 @@
               system-db:gdm
               file-db:/usr/share/gdm/greeter-dconf-defaults
             mode: '0644'
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.2 | PATCH | Disable user list (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/gdm.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.2 | PATCH | Disable user list
           ansible.builtin.copy:
             dest: /etc/dconf/db/gdm.d/00-login-screen
@@ -1959,6 +2063,15 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.2 | PATCH | Lock settings (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/gdm.d/locks
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.2 | PATCH | Lock settings
           ansible.builtin.copy:
             dest: /etc/dconf/db/gdm.d/locks/00-login-screen
@@ -1968,6 +2081,8 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
 - name: 1.8.3 | Ensure GDM screen lock is configured
   when: "'1.8.3' in rhel8cis_active_rules"
   tags:
@@ -1980,6 +2095,13 @@
     - name: 1.8.3 | GDM is installed
       when: "'gdm' in ansible_facts.packages"
       block:
+        - name: "1.8.3 | PATCH | dconf profile 'user' (directory)"
+          ansible.builtin.file:
+            path: /etc/dconf/profile
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: "1.8.3 | PATCH | dconf profile 'user'"
           ansible.builtin.copy:
             dest: /etc/dconf/profile/user
@@ -1988,6 +2110,15 @@
               system-db:local
             mode: '0644'
             force: false
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.3 | PATCH | Screen lock (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.3 | PATCH | Screen lock
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/00-screensaver
@@ -2001,6 +2132,15 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.3 | PATCH | Lock settings (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d/locks
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.3 | PATCH | Lock settings
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/locks/00-screensaver
@@ -2011,6 +2151,8 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
 - name: 1.8.4 | Ensure GDM automount is configured
   when: "'1.8.4' in rhel8cis_active_rules"
   tags:
@@ -2023,6 +2165,13 @@
     - name: 1.8.4 | GDM is installed
       when: "'gdm' in ansible_facts.packages"
       block:
+        - name: "1.8.4 | PATCH | dconf profile 'user' (directory)"
+          ansible.builtin.file:
+            path: /etc/dconf/profile
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: "1.8.4 | PATCH | dconf profile 'user'"
           ansible.builtin.copy:
             dest: /etc/dconf/profile/user
@@ -2031,6 +2180,15 @@
               system-db:local
             mode: '0644'
             force: false
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.4 | PATCH | Disable automount (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.4 | PATCH | Disable automount
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/00-media-automount
@@ -2042,6 +2200,15 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.4 | PATCH | Lock settings (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d/locks
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.4 | PATCH | Lock settings
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/locks/00-media-automount
@@ -2052,6 +2219,8 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
 - name: 1.8.5 | Ensure GDM autorun-never is configured
   when: "'1.8.5' in rhel8cis_active_rules"
   tags:
@@ -2064,6 +2233,13 @@
     - name: 1.8.5 | GDM is installed
       when: "'gdm' in ansible_facts.packages"
       block:
+        - name: "1.8.5 | PATCH | dconf profile 'user' (directory)"
+          ansible.builtin.file:
+            path: /etc/dconf/profile
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: "1.8.5 | PATCH | dconf profile 'user'"
           ansible.builtin.copy:
             dest: /etc/dconf/profile/user
@@ -2072,6 +2248,15 @@
               system-db:local
             mode: '0644'
             force: false
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.5 | PATCH | Autorun never (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.5 | PATCH | Autorun never
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/00-media-autorun
@@ -2082,6 +2267,15 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
+        - name: 1.8.5 | PATCH | Lock settings (directory)
+          ansible.builtin.file:
+            path: /etc/dconf/db/local.d/locks
+            state: directory
+            owner: root
+            group: root
+            mode: '0755'
         - name: 1.8.5 | PATCH | Lock settings
           ansible.builtin.copy:
             dest: /etc/dconf/db/local.d/locks/00-media-autorun
@@ -2091,6 +2285,8 @@
             group: root
             mode: '0644'
           notify: rhel8cis dconf update
+          register: cis_copy_result
+          failed_when: "cis_copy_result is failed and not (ansible_check_mode and 'does not exist' in (cis_copy_result.msg | default('')))"
 - name: 1.8.6 | Ensure XDMCP is not enabled
   when: "'1.8.6' in rhel8cis_active_rules"
   tags:
@@ -2136,3 +2332,5 @@
             line: WaylandEnable=false
             insertafter: ^\[daemon\]\s*$
             firstmatch: true
+            create: true
+            mode: '0644'

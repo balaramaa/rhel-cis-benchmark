@@ -39,6 +39,8 @@
         regexp: ^(\s*CRYPTO_POLICY\s*=.*)$
         replace: '# \1'
       notify: rhel8cis restart sshd
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.1.2 | Ensure access to /etc/ssh/sshd_config is configured
   when: "'5.1.2' in rhel8cis_active_rules"
   tags:
@@ -744,6 +746,8 @@
         regexp: ^\s*#?\s*auth\s+required\s+pam_wheel\.so
         line: auth required pam_wheel.so use_uid group={{ rhel8cis_su_group }}
         insertafter: ^\s*auth\s+sufficient\s+pam_rootok\.so
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.1.1 | Ensure latest version of pam is installed
   when: "'5.3.1.1' in rhel8cis_active_rules"
   tags:
@@ -907,6 +911,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.1.2 | Ensure password unlock time is configured
   when: "'5.3.3.1.2' in rhel8cis_active_rules"
   tags:
@@ -935,6 +941,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.1.3 | Ensure password failed attempts lockout includes root account
   when: "'5.3.3.1.3' in rhel8cis_active_rules"
   tags:
@@ -972,6 +980,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.1 | Ensure password number of changed characters is configured
   when: "'5.3.3.2.1' in rhel8cis_active_rules"
   tags:
@@ -986,6 +996,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*difok\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.1 | PATCH | difok = {{ rhel8cis_pwquality_difok }}
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1005,6 +1017,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.2 | Ensure password length is configured
   when: "'5.3.3.2.2' in rhel8cis_active_rules"
   tags:
@@ -1019,6 +1033,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*minlen\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.2 | PATCH | minlen = {{ rhel8cis_pwquality_minlen }}
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1038,6 +1054,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.3 | Ensure password complexity is configured
   when: "'5.3.3.2.3' in rhel8cis_active_rules"
   tags:
@@ -1052,6 +1070,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*minclass\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.3 | PATCH | minclass = {{ rhel8cis_pwquality_minclass }}
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1071,6 +1091,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.4 | Ensure password same consecutive characters is configured
   when: "'5.3.3.2.4' in rhel8cis_active_rules"
   tags:
@@ -1085,6 +1107,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*maxrepeat\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.4 | PATCH | maxrepeat = {{ rhel8cis_pwquality_maxrepeat }}
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1104,6 +1128,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.5 | Ensure password maximum sequential characters is configured
   when: "'5.3.3.2.5' in rhel8cis_active_rules"
   tags:
@@ -1118,6 +1144,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*maxsequence\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.5 | PATCH | maxsequence = {{ rhel8cis_pwquality_maxsequence }}
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1137,6 +1165,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.6 | Ensure password dictionary check is enabled
   when: "'5.3.3.2.6' in rhel8cis_active_rules"
   tags:
@@ -1151,6 +1181,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*dictcheck\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.6 | PATCH | dictcheck = 1
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1170,6 +1202,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.2.7 | Ensure password quality is enforced for the root user
   when: "'5.3.3.2.7' in rhel8cis_active_rules"
   tags:
@@ -1184,6 +1218,8 @@
         path: /etc/security/pwquality.conf
         regexp: ^(\s*enforce_for_root\b.*)$
         replace: '# \1'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.2.7 | PATCH | enforce_for_root
       ansible.builtin.lineinfile:
         path: /etc/security/pwquality.conf.d/50-cis.conf
@@ -1203,6 +1239,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.3.1 | Ensure password history remember is configured
   when: "'5.3.3.3.1' in rhel8cis_active_rules"
   tags:
@@ -1231,6 +1269,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.3.3.3.2 | Ensure password history is enforced for the root user
   when: "'5.3.3.3.2' in rhel8cis_active_rules"
   tags:
@@ -1268,6 +1308,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.3.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.3.3.3.3', 'title': 'Ensure pam_pwhistory includes use_authtok', 'type': 'action_required', 'detail': ['PAM is not managed by a custom authselect profile; enable the authselect profile rule first']}] }}"
@@ -1310,6 +1352,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.4.2 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.3.3.4.2', 'title': 'Ensure pam_unix does not include remember', 'type': 'action_required', 'detail': ['PAM is not managed by a custom authselect profile; enable the authselect profile rule first']}] }}"
@@ -1333,6 +1377,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.4.3 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.3.3.4.3', 'title': 'Ensure pam_unix includes a strong password hashing algorithm', 'type': 'action_required', 'detail': ['PAM is not managed by a custom authselect profile; enable the authselect profile rule first']}] }}"
@@ -1356,6 +1402,8 @@
         - password-auth
       when: rhel8cis_authselect_is_custom | bool
       notify: rhel8cis authselect apply
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.3.3.4.4 | Record finding
       ansible.builtin.set_fact:
         rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.3.3.4.4', 'title': 'Ensure pam_unix includes use_authtok', 'type': 'action_required', 'detail': ['PAM is not managed by a custom authselect profile; enable the authselect profile rule first']}] }}"
@@ -1378,6 +1426,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.1 | PATCH | Apply --maxdays {{ rhel8cis_pass_max_days }} to existing users
       ansible.builtin.shell:
         cmd: |
@@ -1409,6 +1459,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.2 | PATCH | Apply --mindays {{ rhel8cis_pass_min_days }} to existing users
       ansible.builtin.shell:
         cmd: |
@@ -1440,6 +1492,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.3 | PATCH | Apply --warndays {{ rhel8cis_pass_warn_age }} to existing users
       ansible.builtin.shell:
         cmd: |
@@ -1471,6 +1525,8 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.4.1.5 | Ensure inactive password lock is configured
   when: "'5.4.1.5' in rhel8cis_active_rules"
   tags:
@@ -1485,6 +1541,8 @@
         path: /etc/default/useradd
         regexp: ^\s*#?\s*INACTIVE=
         line: INACTIVE={{ rhel8cis_inactive_days }}
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.5 | PATCH | Apply --inactive {{ rhel8cis_inactive_days }} to existing users
       ansible.builtin.shell:
         cmd: |
@@ -1650,7 +1708,8 @@
       loop:
         - /root/.bash_profile
         - /root/.bashrc
-      failed_when: false
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
+      register: cis_edit_result
 - name: 5.4.2.7 | Ensure system accounts do not have a valid login shell
   when: "'5.4.2.7' in rhel8cis_active_rules"
   tags:
@@ -1709,6 +1768,8 @@
         path: /etc/shells
         regexp: ^.*/nologin\s*$
         state: absent
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
 - name: 5.4.3.2 | Ensure default user shell timeout is configured
   when: "'5.4.3.2' in rhel8cis_active_rules"
   tags:
@@ -1765,3 +1826,5 @@
         owner: root
         group: root
         mode: '0644'
+      register: cis_edit_result
+      failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"

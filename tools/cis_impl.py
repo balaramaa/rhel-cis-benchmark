@@ -137,8 +137,11 @@ def implement(c, r):
         return [c.lineinfile(rid, "/etc/selinux/config", "^\\s*SELINUXTYPE=", f"SELINUXTYPE={{{{ {P}_selinux_policy }}}}", create=False)], "remediate"
     if t == "Ensure the SELinux mode is not disabled":
         return [
-            c.lineinfile(rid, "/etc/selinux/config", "^\\s*SELINUX=disabled", "SELINUX=permissive", create=False,
-                         label="Change SELINUX=disabled to permissive (reboot + relabel required)"),
+            {"name": f"{rid} | PATCH | Change SELINUX=disabled to permissive (reboot + relabel required)",
+             "ansible.builtin.replace": {"path": "/etc/selinux/config",
+                                         "regexp": "^(\\s*)SELINUX=disabled\\s*$",
+                                         "replace": "\\1SELINUX=permissive"},
+             "notify": f"{P} flag reboot"},
         ], "remediate"
     if t == "Ensure the SELinux mode is enforcing":
         return [
