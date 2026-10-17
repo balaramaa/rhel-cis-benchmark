@@ -79,6 +79,14 @@
 - name: PRELIM | Default authselect base profile
   ansible.builtin.set_fact:
     rhel10cis_authselect_base: '{{ rhel10cis_authselect_profile_current if (rhel10cis_authselect_profile_current | length > 0 and not rhel10cis_authselect_is_custom) else rhel10cis_authselect_default_base }}'
+- name: PRELIM | List mounted filesystems
+  ansible.builtin.command: findmnt -rn -o TARGET
+  register: rhel10cis_findmnt
+  changed_when: false
+  check_mode: false
+- name: PRELIM | Mounted filesystem list
+  ansible.builtin.set_fact:
+    rhel10cis_mounts: '{{ rhel10cis_findmnt.stdout_lines }}'
 - name: PRELIM | Stat /etc/at.deny
   ansible.builtin.stat:
     path: /etc/at.deny

@@ -204,6 +204,11 @@ def prelim(c, bench):
         {"name": "PRELIM | Default authselect base profile",
          "ansible.builtin.set_fact": {
              f"{P}_authselect_base": "{{ %s_authselect_profile_current if (%s_authselect_profile_current | length > 0 and not %s_authselect_is_custom) else %s_authselect_default_base }}" % (P, P, P, P)}},
+        {"name": "PRELIM | List mounted filesystems",
+         "ansible.builtin.command": "findmnt -rn -o TARGET", "register": f"{P}_findmnt",
+         "changed_when": False, "check_mode": False},
+        {"name": "PRELIM | Mounted filesystem list", "ansible.builtin.set_fact":
+            {f"{P}_mounts": "{{ %s_findmnt.stdout_lines }}" % P}},
         {"name": "PRELIM | Stat /etc/at.deny", "ansible.builtin.stat": {"path": "/etc/at.deny"},
          "register": f"{P}_at_deny"},
         {"name": "PRELIM | Summary",

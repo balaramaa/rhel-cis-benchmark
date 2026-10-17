@@ -328,7 +328,7 @@
     - name: 1.1.2.1.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.1.1', 'title': 'Ensure /tmp is tmpfs or a separate partition', 'type': 'action_required', 'detail': ['/tmp is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/tmp' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/tmp' not in rhel10cis_mounts"
 - name: 1.1.2.1.2 | Ensure nodev option set on /tmp partition
   when: "'1.1.2.1.2' in rhel10cis_active_rules"
   tags:
@@ -351,7 +351,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_1_2.rc == 0
-        - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -381,7 +381,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_1_3.rc == 0
-        - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -411,7 +411,7 @@
         replace: \1\2,noexec\3
       when:
         - rhel10cis_fstab_1_1_2_1_4.rc == 0
-        - "'/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -431,7 +431,7 @@
     - name: 1.1.2.2.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.2.1', 'title': 'Ensure /dev/shm is tmpfs or a separate partition', 'type': 'action_required', 'detail': ['/dev/shm is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/dev/shm' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/dev/shm' not in rhel10cis_mounts"
 - name: 1.1.2.2.2 | Ensure nodev option set on /dev/shm partition
   when: "'1.1.2.2.2' in rhel10cis_active_rules"
   tags:
@@ -468,7 +468,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_2_2.rc == 0
-        - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/dev/shm' in rhel10cis_mounts"
       notify: rhel10cis remount /dev/shm
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -512,7 +512,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_2_3.rc == 0
-        - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/dev/shm' in rhel10cis_mounts"
       notify: rhel10cis remount /dev/shm
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -556,7 +556,7 @@
         replace: \1\2,noexec\3
       when:
         - rhel10cis_fstab_1_1_2_2_4.rc == 0
-        - "'/dev/shm' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/dev/shm' in rhel10cis_mounts"
       notify: rhel10cis remount /dev/shm
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -576,7 +576,7 @@
     - name: 1.1.2.3.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.3.1', 'title': 'Ensure separate partition exists for /home', 'type': 'action_required', 'detail': ['/home is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/home' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/home' not in rhel10cis_mounts"
 - name: 1.1.2.3.2 | Ensure nodev option set on /home partition
   when: "'1.1.2.3.2' in rhel10cis_active_rules"
   tags:
@@ -599,7 +599,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_3_2.rc == 0
-        - "'/home' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/home' in rhel10cis_mounts"
       notify: rhel10cis remount /home
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -629,7 +629,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_3_3.rc == 0
-        - "'/home' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/home' in rhel10cis_mounts"
       notify: rhel10cis remount /home
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -649,7 +649,7 @@
     - name: 1.1.2.4.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.4.1', 'title': 'Ensure separate partition exists for /var', 'type': 'action_required', 'detail': ['/var is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/var' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/var' not in rhel10cis_mounts"
 - name: 1.1.2.4.2 | Ensure nodev option set on /var partition
   when: "'1.1.2.4.2' in rhel10cis_active_rules"
   tags:
@@ -672,7 +672,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_4_2.rc == 0
-        - "'/var' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var' in rhel10cis_mounts"
       notify: rhel10cis remount /var
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -702,7 +702,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_4_3.rc == 0
-        - "'/var' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var' in rhel10cis_mounts"
       notify: rhel10cis remount /var
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -722,7 +722,7 @@
     - name: 1.1.2.5.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.5.1', 'title': 'Ensure separate partition exists for /var/tmp', 'type': 'action_required', 'detail': ['/var/tmp is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/var/tmp' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/var/tmp' not in rhel10cis_mounts"
 - name: 1.1.2.5.2 | Ensure nodev option set on /var/tmp partition
   when: "'1.1.2.5.2' in rhel10cis_active_rules"
   tags:
@@ -745,7 +745,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_5_2.rc == 0
-        - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /var/tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -775,7 +775,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_5_3.rc == 0
-        - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /var/tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -805,7 +805,7 @@
         replace: \1\2,noexec\3
       when:
         - rhel10cis_fstab_1_1_2_5_4.rc == 0
-        - "'/var/tmp' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/tmp' in rhel10cis_mounts"
       notify: rhel10cis remount /var/tmp
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -825,7 +825,7 @@
     - name: 1.1.2.6.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.6.1', 'title': 'Ensure separate partition exists for /var/log', 'type': 'action_required', 'detail': ['/var/log is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/var/log' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/var/log' not in rhel10cis_mounts"
 - name: 1.1.2.6.2 | Ensure nodev option set on /var/log partition
   when: "'1.1.2.6.2' in rhel10cis_active_rules"
   tags:
@@ -848,7 +848,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_6_2.rc == 0
-        - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -878,7 +878,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_6_3.rc == 0
-        - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -908,7 +908,7 @@
         replace: \1\2,noexec\3
       when:
         - rhel10cis_fstab_1_1_2_6_4.rc == 0
-        - "'/var/log' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -928,7 +928,7 @@
     - name: 1.1.2.7.1 | Record finding
       ansible.builtin.set_fact:
         rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '1.1.2.7.1', 'title': 'Ensure separate partition exists for /var/log/audit', 'type': 'action_required', 'detail': ['/var/log/audit is not a separate mount - repartition or configure a mount (cannot be automated safely)']}] }}"
-      when: "'/var/log/audit' not in (ansible_facts.mounts | map(attribute='mount') | list)"
+      when: "'/var/log/audit' not in rhel10cis_mounts"
 - name: 1.1.2.7.2 | Ensure nodev option set on /var/log/audit partition
   when: "'1.1.2.7.2' in rhel10cis_active_rules"
   tags:
@@ -951,7 +951,7 @@
         replace: \1\2,nodev\3
       when:
         - rhel10cis_fstab_1_1_2_7_2.rc == 0
-        - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log/audit' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log/audit
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -981,7 +981,7 @@
         replace: \1\2,nosuid\3
       when:
         - rhel10cis_fstab_1_1_2_7_3.rc == 0
-        - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log/audit' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log/audit
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
@@ -1011,7 +1011,7 @@
         replace: \1\2,noexec\3
       when:
         - rhel10cis_fstab_1_1_2_7_4.rc == 0
-        - "'/var/log/audit' in (ansible_facts.mounts | map(attribute='mount') | list)"
+        - "'/var/log/audit' in rhel10cis_mounts"
       notify: rhel10cis remount /var/log/audit
       register: cis_edit_result
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"

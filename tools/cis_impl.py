@@ -50,7 +50,7 @@ def implement(c, r):
         mnt = m.group(1)
         return [c.finding(rid, T, "action_required",
                           f"['{mnt} is not a separate mount - repartition or configure a mount (cannot be automated safely)']",
-                          when=f"'{mnt}' not in (ansible_facts.mounts | map(attribute='mount') | list)")], "audit"
+                          when=f"'{mnt}' not in {P}_mounts")], "audit"
 
     m = re.match(r"Ensure (nodev|nosuid|noexec) option set on (/\S+) partition", t)
     if m:
@@ -78,7 +78,7 @@ def implement(c, r):
                  "path": "/etc/fstab",
                  "regexp": f"^(\\s*[^#\\s]\\S*\\s+{esc}\\s+\\S+\\s+)(?!(?:\\S*,)?{opt}(?:,|\\s))(\\S+)(.*)$",
                  "replace": f"\\1\\2,{opt}\\3"},
-             "when": [f"{reg}.rc == 0", f"'{mnt}' in (ansible_facts.mounts | map(attribute='mount') | list)"],
+             "when": [f"{reg}.rc == 0", f"'{mnt}' in {P}_mounts"],
              "notify": f"{P} remount {mnt}"},
             c.finding(rid, T, "info", f"['{mnt} is not a separate partition in /etc/fstab - option not applicable or set it on the systemd mount unit']",
                       when=f"{reg}.rc != 0 and '{mnt}' != '/dev/shm'"),
@@ -844,15 +844,35 @@ def accounts(c, r):
     def defs(key, val):
         return c.lineinfile(rid, ld, f"^\\s*#?\\s*{key}\\s", f"{key} {val}", create=False)
 
-    chage = lambda field, opt, cond: c.script(rid, f"Apply {opt} to existing users", f"""
+    def chage(field, opt, cond, guard=False):
+        """Apply a chage option to existing accounts.
+
+        guard=True skips accounts whose password is already older than the new
+        maximum age - applying it would expire (or lock) them immediately.
+        """
+        g = ""
+        if guard:
+            g = (f"if [ \"$age\" -gt {{{{ P_pass_max_days }}}} ]; then echo \"SKIPPED $u: password last changed $age days ago "
+                 f"- it would expire/lock immediately. Change this password, then run apply.sh again\"; continue; fi")
+        body = f"""
 [ "{{{{ P_apply_to_existing_users | bool }}}}" = "True" ] || exit 0
-awk -F: '($2 ~ /^\\$.+\\$/) {{ if ({cond}) print $1 }}' /etc/shadow | while read -r u; do
+today=$(( $(date +%s) / 86400 ))
+awk -F: '($2 ~ /^\\$.+\\$/) {{ if ({cond}) print $1 ":" $3 }}' /etc/shadow | while IFS=: read -r u last; do
+  age=$(( today - ${{last:-0}} ))
+  {g}
   echo "CHANGED $u"; [ "$DRY" = 1 ] || chage {opt} "$u"
 done
-""")
+"""
+        ts = c.script(rid, f"Apply {opt} to existing users", body)
+        reg = ts[0]["register"]
+        ts.append(c.finding(rid, t, "action_required",
+                            f"{reg}.stdout_lines | select('match', '^SKIPPED') | list",
+                            when=f"'SKIPPED' in {reg}.stdout"))
+        return ts
+
     if t == "Ensure password expiration is configured":
         return [defs("PASS_MAX_DAYS", "{{ %s_pass_max_days }}" % P)] + chage(5, "--maxdays {{ P_pass_max_days }}".replace("P_", P + "_"),
-                                                                              "$5 > %s || $5 < 1" % ("{{ %s_pass_max_days }}" % P)), "remediate"
+                                                                              "$5 > %s || $5 < 1" % ("{{ %s_pass_max_days }}" % P), guard=True), "remediate"
     if t == "Ensure minimum password days is configured":
         return [defs("PASS_MIN_DAYS", "{{ %s_pass_min_days }}" % P)] + chage(4, "--mindays {{ %s_pass_min_days }}" % P,
                                                                               "$4 < 1"), "remediate"
@@ -865,7 +885,7 @@ done
         return [{"name": f"{rid} | PATCH | useradd default INACTIVE",
                  "ansible.builtin.lineinfile": {"path": "/etc/default/useradd", "regexp": "^\\s*#?\\s*INACTIVE=",
                                                 "line": "INACTIVE={{ %s_inactive_days }}" % P}}] + \
-            chage(7, "--inactive {{ %s_inactive_days }}" % P, "$7 > %s || $7 < 0 || $7 == \"\"" % ("{{ %s_inactive_days }}" % P)), "remediate"
+            chage(7, "--inactive {{ %s_inactive_days }}" % P, "$7 > %s || $7 < 0 || $7 == \"\"" % ("{{ %s_inactive_days }}" % P), guard=True), "remediate"
     if t == "Ensure all users last password change date is in the past":
         return c.audit(rid, t, "now=$(( $(date +%s) / 86400 )); awk -F: -v n=\"$now\" '($2 ~ /^\\$/ && $3 > n) {print $1\": last change in future\"}' /etc/shadow"), "audit"
     if t == "Ensure root is the only UID 0 account":

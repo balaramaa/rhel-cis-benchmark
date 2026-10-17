@@ -1446,13 +1446,20 @@
           DRY={{ ansible_check_mode | ternary('1', '0') }}
 
           [ "{{ rhel8cis_apply_to_existing_users | bool }}" = "True" ] || exit 0
-          awk -F: '($2 ~ /^\$.+\$/) { if ($5 > {{ rhel8cis_pass_max_days }} || $5 < 1) print $1 }' /etc/shadow | while read -r u; do
+          today=$(( $(date +%s) / 86400 ))
+          awk -F: '($2 ~ /^\$.+\$/) { if ($5 > {{ rhel8cis_pass_max_days }} || $5 < 1) print $1 ":" $3 }' /etc/shadow | while IFS=: read -r u last; do
+            age=$(( today - ${last:-0} ))
+            if [ "$age" -gt {{ rhel8cis_pass_max_days }} ]; then echo "SKIPPED $u: password last changed $age days ago - it would expire/lock immediately. Change this password, then run apply.sh again"; continue; fi
             echo "CHANGED $u"; [ "$DRY" = 1 ] || chage --maxdays {{ rhel8cis_pass_max_days }} "$u"
           done
         executable: /bin/bash
       register: rhel8cis_fix_5_4_1_1
       changed_when: "'CHANGED' in rhel8cis_fix_5_4_1_1.stdout"
       check_mode: false
+    - name: 5.4.1.1 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.4.1.1', 'title': 'Ensure password expiration is configured', 'type': 'action_required', 'detail': rhel8cis_fix_5_4_1_1.stdout_lines | select('match', '^SKIPPED') | list}] }}"
+      when: "'SKIPPED' in rhel8cis_fix_5_4_1_1.stdout"
 - name: 5.4.1.2 | Ensure minimum password days is configured
   when: "'5.4.1.2' in rhel8cis_active_rules"
   tags:
@@ -1475,17 +1482,15 @@
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.2 | PATCH | Apply --mindays {{ rhel8cis_pass_min_days }} to existing users
       ansible.builtin.shell:
-        cmd: |
-          DRY={{ ansible_check_mode | ternary('1', '0') }}
-
-          [ "{{ rhel8cis_apply_to_existing_users | bool }}" = "True" ] || exit 0
-          awk -F: '($2 ~ /^\$.+\$/) { if ($4 < 1) print $1 }' /etc/shadow | while read -r u; do
-            echo "CHANGED $u"; [ "$DRY" = 1 ] || chage --mindays {{ rhel8cis_pass_min_days }} "$u"
-          done
+        cmd: "DRY={{ ansible_check_mode | ternary('1', '0') }}\n\n[ \"{{ rhel8cis_apply_to_existing_users | bool }}\" = \"True\" ] || exit 0\ntoday=$(( $(date +%s) / 86400 ))\nawk -F: '($2 ~ /^\\$.+\\$/) { if ($4 < 1) print $1 \":\" $3 }' /etc/shadow | while IFS=: read -r u last; do\n  age=$(( today - ${last:-0} ))\n  \n  echo \"CHANGED $u\"; [ \"$DRY\" = 1 ] || chage --mindays {{ rhel8cis_pass_min_days }} \"$u\"\ndone\n"
         executable: /bin/bash
       register: rhel8cis_fix_5_4_1_2
       changed_when: "'CHANGED' in rhel8cis_fix_5_4_1_2.stdout"
       check_mode: false
+    - name: 5.4.1.2 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.4.1.2', 'title': 'Ensure minimum password days is configured', 'type': 'action_required', 'detail': rhel8cis_fix_5_4_1_2.stdout_lines | select('match', '^SKIPPED') | list}] }}"
+      when: "'SKIPPED' in rhel8cis_fix_5_4_1_2.stdout"
 - name: 5.4.1.3 | Ensure password expiration warning days is configured
   when: "'5.4.1.3' in rhel8cis_active_rules"
   tags:
@@ -1508,17 +1513,15 @@
       failed_when: "cis_edit_result is failed and 'does not exist' not in (cis_edit_result.msg | default(''))"
     - name: 5.4.1.3 | PATCH | Apply --warndays {{ rhel8cis_pass_warn_age }} to existing users
       ansible.builtin.shell:
-        cmd: |
-          DRY={{ ansible_check_mode | ternary('1', '0') }}
-
-          [ "{{ rhel8cis_apply_to_existing_users | bool }}" = "True" ] || exit 0
-          awk -F: '($2 ~ /^\$.+\$/) { if ($6 < {{ rhel8cis_pass_warn_age }}) print $1 }' /etc/shadow | while read -r u; do
-            echo "CHANGED $u"; [ "$DRY" = 1 ] || chage --warndays {{ rhel8cis_pass_warn_age }} "$u"
-          done
+        cmd: "DRY={{ ansible_check_mode | ternary('1', '0') }}\n\n[ \"{{ rhel8cis_apply_to_existing_users | bool }}\" = \"True\" ] || exit 0\ntoday=$(( $(date +%s) / 86400 ))\nawk -F: '($2 ~ /^\\$.+\\$/) { if ($6 < {{ rhel8cis_pass_warn_age }}) print $1 \":\" $3 }' /etc/shadow | while IFS=: read -r u last; do\n  age=$(( today - ${last:-0} ))\n  \n  echo \"CHANGED $u\"; [ \"$DRY\" = 1 ] || chage --warndays {{ rhel8cis_pass_warn_age }} \"$u\"\ndone\n"
         executable: /bin/bash
       register: rhel8cis_fix_5_4_1_3
       changed_when: "'CHANGED' in rhel8cis_fix_5_4_1_3.stdout"
       check_mode: false
+    - name: 5.4.1.3 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.4.1.3', 'title': 'Ensure password expiration warning days is configured', 'type': 'action_required', 'detail': rhel8cis_fix_5_4_1_3.stdout_lines | select('match', '^SKIPPED') | list}] }}"
+      when: "'SKIPPED' in rhel8cis_fix_5_4_1_3.stdout"
 - name: 5.4.1.4 | Ensure strong password hashing algorithm is configured
   when: "'5.4.1.4' in rhel8cis_active_rules"
   tags:
@@ -1561,13 +1564,20 @@
           DRY={{ ansible_check_mode | ternary('1', '0') }}
 
           [ "{{ rhel8cis_apply_to_existing_users | bool }}" = "True" ] || exit 0
-          awk -F: '($2 ~ /^\$.+\$/) { if ($7 > {{ rhel8cis_inactive_days }} || $7 < 0 || $7 == "") print $1 }' /etc/shadow | while read -r u; do
+          today=$(( $(date +%s) / 86400 ))
+          awk -F: '($2 ~ /^\$.+\$/) { if ($7 > {{ rhel8cis_inactive_days }} || $7 < 0 || $7 == "") print $1 ":" $3 }' /etc/shadow | while IFS=: read -r u last; do
+            age=$(( today - ${last:-0} ))
+            if [ "$age" -gt {{ rhel8cis_pass_max_days }} ]; then echo "SKIPPED $u: password last changed $age days ago - it would expire/lock immediately. Change this password, then run apply.sh again"; continue; fi
             echo "CHANGED $u"; [ "$DRY" = 1 ] || chage --inactive {{ rhel8cis_inactive_days }} "$u"
           done
         executable: /bin/bash
       register: rhel8cis_fix_5_4_1_5
       changed_when: "'CHANGED' in rhel8cis_fix_5_4_1_5.stdout"
       check_mode: false
+    - name: 5.4.1.5 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.4.1.5', 'title': 'Ensure inactive password lock is configured', 'type': 'action_required', 'detail': rhel8cis_fix_5_4_1_5.stdout_lines | select('match', '^SKIPPED') | list}] }}"
+      when: "'SKIPPED' in rhel8cis_fix_5_4_1_5.stdout"
 - name: 5.4.1.6 | Ensure all users last password change date is in the past
   when: "'5.4.1.6' in rhel8cis_active_rules"
   tags:
