@@ -252,17 +252,21 @@
       changed_when: false
       failed_when: false
       check_mode: false
-    - name: 5.1.8 | PATCH | Remove weak Ciphers
+    - name: 5.1.8 | PATCH | Pin Ciphers without weak algorithms
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config.d/00-cis-hardening.conf
         regexp: ^\s*#?\s*Ciphers\s
-        line: "Ciphers -{{ rhel8cis_sshd_weak_ciphers | join(',') }}"
+        line: "Ciphers {{ rhel8cis_sshdt_5_1_8.stdout.split(',') | difference(rhel8cis_sshd_weak_ciphers) | join(',') }}"
         create: true
         owner: root
         group: root
         mode: '0600'
       notify: rhel8cis restart sshd
-      when: "(rhel8cis_sshdt_5_1_8.stdout.split(',') | intersect(rhel8cis_sshd_weak_ciphers)) | length > 0"
+      when: "(rhel8cis_sshdt_5_1_8.stdout.split(',') | intersect(rhel8cis_sshd_weak_ciphers)) | length > 0 and '1.6.4' not in rhel8cis_active_rules"
+    - name: 5.1.8 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.1.8', 'title': 'Ensure sshd Ciphers are configured', 'type': 'info', 'detail': ['Weak Ciphers are removed by the crypto policy (control 1.6.4) - re-check after reboot']}] }}"
+      when: "(rhel8cis_sshdt_5_1_8.stdout.split(',') | intersect(rhel8cis_sshd_weak_ciphers)) | length > 0 and '1.6.4' in rhel8cis_active_rules"
 - name: 5.1.9 | Ensure sshd ClientAliveInterval and ClientAliveCountMax are configured
   when: "'5.1.9' in rhel8cis_active_rules"
   tags:
@@ -383,17 +387,21 @@
       changed_when: false
       failed_when: false
       check_mode: false
-    - name: 5.1.14 | PATCH | Remove weak KexAlgorithms
+    - name: 5.1.14 | PATCH | Pin KexAlgorithms without weak algorithms
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config.d/00-cis-hardening.conf
         regexp: ^\s*#?\s*KexAlgorithms\s
-        line: "KexAlgorithms -{{ rhel8cis_sshd_weak_kex | join(',') }}"
+        line: "KexAlgorithms {{ rhel8cis_sshdt_5_1_14.stdout.split(',') | difference(rhel8cis_sshd_weak_kex) | join(',') }}"
         create: true
         owner: root
         group: root
         mode: '0600'
       notify: rhel8cis restart sshd
-      when: "(rhel8cis_sshdt_5_1_14.stdout.split(',') | intersect(rhel8cis_sshd_weak_kex)) | length > 0"
+      when: "(rhel8cis_sshdt_5_1_14.stdout.split(',') | intersect(rhel8cis_sshd_weak_kex)) | length > 0 and '1.6.2' not in rhel8cis_active_rules"
+    - name: 5.1.14 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.1.14', 'title': 'Ensure sshd KexAlgorithms is configured', 'type': 'info', 'detail': ['Weak KexAlgorithms are removed by the crypto policy (control 1.6.2) - re-check after reboot']}] }}"
+      when: "(rhel8cis_sshdt_5_1_14.stdout.split(',') | intersect(rhel8cis_sshd_weak_kex)) | length > 0 and '1.6.2' in rhel8cis_active_rules"
 - name: 5.1.15 | Ensure sshd LoginGraceTime is configured
   when: "'5.1.15' in rhel8cis_active_rules"
   tags:
@@ -447,17 +455,21 @@
       changed_when: false
       failed_when: false
       check_mode: false
-    - name: 5.1.17 | PATCH | Remove weak MACs
+    - name: 5.1.17 | PATCH | Pin MACs without weak algorithms
       ansible.builtin.lineinfile:
         path: /etc/ssh/sshd_config.d/00-cis-hardening.conf
         regexp: ^\s*#?\s*MACs\s
-        line: "MACs -{{ rhel8cis_sshd_weak_macs | join(',') }}"
+        line: "MACs {{ rhel8cis_sshdt_5_1_17.stdout.split(',') | difference(rhel8cis_sshd_weak_macs) | join(',') }}"
         create: true
         owner: root
         group: root
         mode: '0600'
       notify: rhel8cis restart sshd
-      when: "(rhel8cis_sshdt_5_1_17.stdout.split(',') | intersect(rhel8cis_sshd_weak_macs)) | length > 0"
+      when: "(rhel8cis_sshdt_5_1_17.stdout.split(',') | intersect(rhel8cis_sshd_weak_macs)) | length > 0 and '1.6.3' not in rhel8cis_active_rules"
+    - name: 5.1.17 | Record finding
+      ansible.builtin.set_fact:
+        rhel8cis_findings: "{{ rhel8cis_findings + [{'id': '5.1.17', 'title': 'Ensure sshd MACs are configured', 'type': 'info', 'detail': ['Weak MACs are removed by the crypto policy (control 1.6.3) - re-check after reboot']}] }}"
+      when: "(rhel8cis_sshdt_5_1_17.stdout.split(',') | intersect(rhel8cis_sshd_weak_macs)) | length > 0 and '1.6.3' in rhel8cis_active_rules"
 - name: 5.1.18 | Ensure sshd MaxAuthTries is configured
   when: "'5.1.18' in rhel8cis_active_rules"
   tags:

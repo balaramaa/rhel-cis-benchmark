@@ -44,6 +44,11 @@
         creates: /var/lib/aide/aide.db.gz
       async: 3600
       poll: 15
+      when: not ansible_check_mode
+    - name: 6.1.1 | Record finding
+      ansible.builtin.set_fact:
+        rhel10cis_findings: "{{ rhel10cis_findings + [{'id': '6.1.1', 'title': 'Ensure AIDE is installed', 'type': 'info', 'detail': ['Dry run: the AIDE database is created on the real run (takes several minutes)']}] }}"
+      when: ansible_check_mode
 - name: 6.1.2 | Ensure filesystem integrity is regularly checked
   when: "'6.1.2' in rhel10cis_active_rules"
   tags:

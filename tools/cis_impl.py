@@ -646,17 +646,31 @@ def ssh(c, r):
                                when=" and ".join(f"{P}_sshd_{k} | length == 0" for k in
                                                  ("allowusers", "allowgroups", "denyusers", "denygroups"))))
         return tasks
+    crypto_title = {"Ciphers": "Ensure system wide crypto policy disables cbc for ssh",
+                    "MACs": "Ensure system wide crypto policy macs are configured",
+                    "KexAlgorithms": "Ensure system wide crypto policy disables sha1 hash and signature support"}
     for k, (low, var) in SSHD_WEAK.items():
         if t == f"Ensure sshd {k} are configured" or t == f"Ensure sshd {k} is configured":
             reg = f"{P}_sshdt_{slug(rid)}"
-            return [
+            pol = c.ids_by_title.get(crypto_title[k])
+            weak = f"({reg}.stdout.split(',') | intersect({c.s(var)}))"
+            tasks = [
                 {"name": f"{rid} | AUDIT | Read effective {k}",
                  "ansible.builtin.shell": f"sshd -T 2>/dev/null | awk '$1==\"{low}\"{{print $2}}'",
                  "register": reg, "changed_when": False, "failed_when": False, "check_mode": False},
-                c.lineinfile(rid, dropin, f"^\\s*#?\\s*{k}\\s", f"{k} -{{{{ {c.s(var)} | join(',') }}}}",
-                             notify=notify, mode="0600", label=f"Remove weak {k}",
-                             when=f"({reg}.stdout.split(',') | intersect({c.s(var)})) | length > 0"),
             ]
+            # CIS: configure SSH algorithms through the system-wide crypto policy (section 1.6).
+            # Only pin an explicit list when that crypto-policy control is not part of this run.
+            explicit = c.lineinfile(rid, dropin, f"^\\s*#?\\s*{k}\\s",
+                                    f"{k} {{{{ {reg}.stdout.split(',') | difference({c.s(var)}) | join(',') }}}}",
+                                    notify=notify, mode="0600", label=f"Pin {k} without weak algorithms",
+                                    when=f"{weak} | length > 0" + (f" and '{pol}' not in {P}_active_rules" if pol else ""))
+            tasks.append(explicit)
+            if pol:
+                tasks.append(c.finding(rid, t, "info",
+                                       f"['Weak {k} are removed by the crypto policy (control {pol}) - re-check after reboot']",
+                                       when=f"{weak} | length > 0 and '{pol}' in {P}_active_rules"))
+            return tasks
     return None
 
 
@@ -979,7 +993,10 @@ def logging_audit(c, r):
         return [c.pkg(rid, ["aide"], "present"),
                 {"name": f"{rid} | PATCH | Initialise the AIDE database (can take several minutes)",
                  "ansible.builtin.shell": "aide --init && mv -f /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz",
-                 "args": {"creates": "/var/lib/aide/aide.db.gz"}, "async": 3600, "poll": 15}], "remediate"
+                 "args": {"creates": "/var/lib/aide/aide.db.gz"}, "async": 3600, "poll": 15,
+                 "when": "not ansible_check_mode"},
+                c.finding(rid, t, "info", "['Dry run: the AIDE database is created on the real run (takes several minutes)']",
+                          when="ansible_check_mode")], "remediate"
     if t == "Ensure filesystem integrity is regularly checked":
         return [
             {"name": f"{rid} | PATCH | aidecheck.service",

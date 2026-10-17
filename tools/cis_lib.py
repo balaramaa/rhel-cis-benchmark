@@ -128,6 +128,7 @@ class Ctx:
     def __init__(self, v):
         self.v = int(v)
         self.p = f"rhel{v}cis"
+        self.ids_by_title = {}
 
     def s(self, text):
         """Replace the P_ placeholder with this role's variable prefix."""

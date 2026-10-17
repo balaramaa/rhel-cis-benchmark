@@ -72,6 +72,7 @@ def build_role(v):
     bench = json.load(open(os.path.join(ROOT, "tools", "benchmarks", f"rhel{v}.json")))
     c = Ctx(v)
     P = c.p
+    c.ids_by_title = {r["title"]: r["id"] for r in bench["rules"]}
     role = f"rhel{v}/roles/cis_rhel{v}"
     sections = OrderedDict()
     coverage = []
