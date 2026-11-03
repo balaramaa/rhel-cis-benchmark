@@ -1,31 +1,31 @@
 # CIS Benchmark for RHEL 8, RHEL 9 and RHEL 10 — Ansible Hardening Playbook
 
-Automatically apply the **CIS Benchmark** to **Red Hat Enterprise Linux 8, 9 and 10**
-(also **Rocky Linux, AlmaLinux and Oracle Linux**) with one command. Free, open source, no Ansible experience needed.
+An independent, open-source implementation for applying CIS Benchmark-related hardening settings to Red Hat Enterprise Linux 8, 9 and 10, with intended support for Rocky Linux, AlmaLinux and Oracle Linux of the corresponding major versions.
 
-| Your OS | CIS Benchmark | Controls | Download |
+The project provides an OS-major-version entry script, version-specific configuration, selectable profiles, and control exclusions. The author-reported lab testing below covers RHEL only; it does not establish testing of every compatible distribution or profile.
+
+| Your OS | Referenced CIS Benchmark | Listed controls | Download |
 |---|---|---|---|
-| **RHEL 8** / Rocky 8 / Alma 8 | CIS RHEL 8 Benchmark **v4.0.0** | 322 | [cis-rhel8.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz) |
-| **RHEL 9** / Rocky 9 / Alma 9 | CIS RHEL 9 Benchmark **v3.0.0** | 352 | [cis-rhel9.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz) |
-| **RHEL 10** / Rocky 10 / Alma 10 | CIS RHEL 10 Benchmark **v1.0.1** | 328 | [cis-rhel10.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz) |
+| RHEL 8 / Rocky 8 / Alma 8 | CIS RHEL 8 Benchmark v4.0.0 | 322 | [cis-rhel8.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz) |
+| RHEL 9 / Rocky 9 / Alma 9 | CIS RHEL 9 Benchmark v3.0.0 | 352 | [cis-rhel9.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz) |
+| RHEL 10 / Rocky 10 / Alma 10 | CIS RHEL 10 Benchmark v1.0.1 | 328 | [cis-rhel10.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz) |
 
-Each download contains **only** the settings for that OS version.
+Each download contains the files for that OS major version. Listed control counts describe the project's control inventory, not an independently verified count of automatically remediated or passed checks.
 
 ---
 
-## Quick start (3 steps, on the server)
+## Quick start
 
-> ⚠️ Test on a non-production server first. Make sure you can log in as a **normal user with sudo** —
-> root SSH login is disabled by the benchmark.
+> Test on a disposable or non-production system first. Take a VM snapshot or backup and retain console access. Review settings and exclusions before execution. Root SSH login may be disabled by the selected settings; ensure an appropriate sudo user can log in. There is no automatic rollback.
 
 ### RHEL 8
 
 ```bash
 curl -LO https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz
 tar xzf cis-rhel8.tar.gz && cd rhel8
-sudo ./apply.sh --check     # 1. preview the changes (nothing is changed)
-sudo ./apply.sh             # 2. apply the CIS benchmark
-sudo reboot                 # 3. reboot to activate everything
+sudo ./apply.sh --check     # preview the planned Ansible changes
+sudo ./apply.sh             # apply the selected settings
+sudo reboot                 # reboot when appropriate after reviewing changes
 ```
 
 ### RHEL 9
@@ -48,7 +48,7 @@ sudo ./apply.sh
 sudo reboot
 ```
 
-### Don't know your version? Use the auto-detect script
+### OS-major-version entry script
 
 ```bash
 git clone https://github.com/balaramaa/rhel-cis-benchmark.git
@@ -57,8 +57,9 @@ sudo ./apply.sh --check
 sudo ./apply.sh
 ```
 
-`apply.sh` installs `ansible-core` from the standard AppStream repository if it is not already installed.
-Nothing else is required.
+The top-level script reads `/etc/os-release`, extracts the major version from `VERSION_ID`, and dispatches to the matching version directory. This dispatch is not a complete distribution-compatibility check. Confirm that your distribution and environment are appropriate before running it.
+
+The version-specific scripts are intended to install `ansible-core` from the standard AppStream repository when needed. Repository access, privileges, package availability, and system-specific prerequisites must be checked in your environment.
 
 ---
 
@@ -66,21 +67,18 @@ Nothing else is required.
 
 | You want to… | Command |
 |---|---|
-| Preview changes only | `sudo ./apply.sh --check` |
+| Preview planned changes | `sudo ./apply.sh --check` |
 | Level 1 Server (default) | `sudo ./apply.sh` |
 | Level 2 (stricter) | `sudo ./apply.sh --level 2` |
 | Workstation profile | `sudo ./apply.sh --workstation` |
-| **Skip** some controls | `sudo ./apply.sh --skip 1.1.1.6,5.1.20` |
+| Skip some controls | `sudo ./apply.sh --skip 1.1.1.6,5.1.20` |
 | Skip a whole section | `sudo ./apply.sh --skip-section 6.3` |
-| Apply **only** some controls | `sudo ./apply.sh --only 5.1.20,5.1.16` |
+| Apply only some controls | `sudo ./apply.sh --only 5.1.20,5.1.16` |
 | No confirmation prompt (automation) | `sudo ./apply.sh -y` |
 
-Control IDs and titles for each version: [rhel8/CONTROLS.md](rhel8/CONTROLS.md) ·
-[rhel9/CONTROLS.md](rhel9/CONTROLS.md) · [rhel10/CONTROLS.md](rhel10/CONTROLS.md)
+Control IDs and titles for each version: [rhel8/CONTROLS.md](rhel8/CONTROLS.md) · [rhel9/CONTROLS.md](rhel9/CONTROLS.md) · [rhel10/CONTROLS.md](rhel10/CONTROLS.md).
 
-> **Note:** IDs differ between versions. For example, `5.1.20` is *sshd MaxStartups* on RHEL 8,
-> *PermitEmptyPasswords* on RHEL 9 and *PermitRootLogin* on RHEL 10. Always check the CONTROLS.md
-> file for your version.
+Control IDs differ between benchmark versions. Always check the control list and implementation for your version before selecting or excluding a control. The examples above illustrate syntax, not a recommended exclusion policy.
 
 ### Make exclusions permanent
 
@@ -88,55 +86,59 @@ Edit `settings.yml` in your version's folder, for example `rhel9/settings.yml`:
 
 ```yaml
 rhel9cis_level: 1
-rhel9cis_skip_rules: ["1.1.1.6"]          # keep overlay module for podman
-rhel9cis_sshd_allowgroups: [wheel]        # only wheel members may SSH
+rhel9cis_skip_rules: ["1.1.1.6"]          # example exclusion; review for your environment
+rhel9cis_sshd_allowgroups: [wheel]        # example SSH access restriction
 rhel9cis_firewalld_allowed_services: [ssh, https]
 ```
 
-Then run `sudo ./apply.sh` again.
+Then run `sudo ./apply.sh` again after reviewing the effects.
 
 ---
 
-## What you get after running
+## Output and validation
 
-- The server is hardened to the selected CIS profile.
-- A report at `/root/cis-rhelN-report.json` lists every applied control and anything that needs your
-  attention (for example, partitions that must be created at install time).
-- The output ends with a short list of findings to review.
+- The playbook applies the selected implemented settings, subject to exclusions, existing system state, and execution results.
+- The project documents a report at `/root/cis-rhelN-report.json` for applied controls and items requiring attention, such as partitions that must be created at install time.
+- Review the execution output, findings, skipped tasks, and configuration changes.
 
-To verify independently, scan with OpenSCAP or CIS-CAT before and after:
+A successful execution or generated report is not by itself proof of full CIS compliance or audit success. Assess the resulting system separately with a suitable scanner and review manual controls and exceptions.
+
+For an OpenSCAP assessment, first check the data stream and available profile identifiers for the installed content:
 
 ```bash
 sudo dnf install -y openscap-scanner scap-security-guide
-sudo oscap xccdf eval --profile cis_server_l1 --report cis-report.html \
-  /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml     # use rhel8 / rhel10 as needed
+oscap info /usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
 ```
 
----
+Use the data stream and profile appropriate to your OS, installed content, and assessment objective. A RHEL 9 path or profile should not be assumed to apply unchanged to RHEL 8 or RHEL 10. Qualys or CIS-CAT assessments likewise require appropriate configuration and interpretation of results.
 
-## Check before you run in production
+## Operational precautions and limitations
 
-| Setting | Why it matters | How to keep it |
-|---|---|---|
-| Root SSH login is disabled | You could be locked out | Log in as a sudo user, or skip PermitRootLogin (RHEL 8: `5.1.22`, RHEL 9: `5.1.21`, RHEL 10: `5.1.20`) |
-| firewalld is enabled | Only SSH stays open by default | Add services to `firewalld_allowed_services` in settings.yml |
-| `overlay` module disabled (Level 2) | Breaks podman / containers | `--skip 1.1.1.6` |
-| USB storage disabled | USB drives stop working | `--skip 1.1.1.10` |
-| auditd halts the system when its disk is full (Level 2) | Availability | Set `auditd_disk_full_action: single` |
-| Some settings need a reboot | Kernel, SELinux, crypto policy | `sudo reboot` after applying |
+- Review SSH access settings to avoid losing remote access.
+- Review firewall rules and application service requirements.
+- Kernel-module restrictions may affect containers, storage, or attached devices.
+- Audit settings can affect system availability when storage is exhausted.
+- Some changes require rebooting; schedule and validate reboots appropriately.
+- Check mode is a preview, not a substitute for testing the complete workflow.
+- Controls may require manual action, environment-specific configuration, or documented exceptions.
+- Repeated execution should be tested in your environment rather than assumed safe for every workload.
+- There is no automatic undo. Maintain a tested recovery procedure.
+- This project does not certify SOX compliance, guarantee audit outcomes, or replace organizational security and compliance controls.
 
 ---
 
 ## Many servers at once (optional)
 
-From any machine with Ansible installed:
+From a suitable control machine with Ansible installed:
 
 ```bash
 git clone https://github.com/balaramaa/rhel-cis-benchmark.git && cd rhel-cis-benchmark
-cp inventory/hosts.yml.example inventory/hosts.yml     # list your servers
+cp inventory/hosts.yml.example inventory/hosts.yml     # configure and review your inventory
 ansible-playbook site.yml --check --diff               # preview
-ansible-playbook site.yml                              # apply - each server gets its own version
+ansible-playbook site.yml                              # apply after testing
 ```
+
+Test on a limited, non-production inventory before broader deployment. Do not commit credentials or sensitive inventory data to the public repository.
 
 ## Lab testing
 
@@ -146,44 +148,25 @@ Qualys was used separately to assess the resulting configurations. Results inclu
 
 These results describe the tested lab environments, not a guarantee that every control will pass on other systems. Skipped checks are not counted as passed checks.
 
-The following dates and results are reported by the author. OS minor versions, scan scores, and individual check counts are not specified in this summary.
+The following dates and results are reported by the author. OS minor versions, scan scores, and individual check counts are not specified in this summary. This is an author-reported summary, not a published independent test report.
 
 | OS major version | Profile reported | Test date reported | Test summary |
 |---|---|---|---|
-| RHEL 9 | Level 1 | August 14, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
-| RHEL 8 | Level 1 | August 27, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
-| RHEL 10 | Level 1 | September 18, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
+| RHEL 9 | Level 1 | August 14, 2026 | Error-free execution; settings checked; Qualys assessment included passed and skipped checks |
+| RHEL 8 | Level 1 | August 27, 2026 | Error-free execution; settings checked; Qualys assessment included passed and skipped checks |
+| RHEL 10 | Level 1 | September 18, 2026 | Error-free execution; settings checked; Qualys assessment included passed and skipped checks |
 
 ## Repository layout
 
-```
-rhel-cis-benchmark/
-├── apply.sh          ← auto-detects RHEL 8 / 9 / 10
-├── rhel8/            ← everything for RHEL 8   (CIS v4.0.0)
-│   ├── apply.sh      ← run this on a RHEL 8 server
-│   ├── settings.yml  ← your choices (level, skips, SSH groups …)
-│   ├── CONTROLS.md   ← list of all 322 controls
-│   ├── playbook.yml
-│   └── roles/cis_rhel8/
-├── rhel9/            ← everything for RHEL 9   (CIS v3.0.0)
-├── rhel10/           ← everything for RHEL 10  (CIS v1.0.1)
-├── site.yml          ← optional: many servers from one Ansible machine
-└── docs/  tools/     ← documentation and the generator for maintainers
-```
+- `apply.sh`: OS-major-version entry script.
+- `rhel8/`, `rhel9/`, `rhel10/`: version-specific scripts, settings, control lists, playbooks, and roles.
+- `site.yml`: fleet-mode playbook.
+- `inventory/`: inventory examples.
+- `reports/`: report-related files.
+- `docs/`: project documentation.
+- `tools/`: generation and maintenance utilities.
 
----
-
-## FAQ
-
-**Does it work on Rocky Linux / AlmaLinux / Oracle Linux?** Yes, versions 8, 9 and 10.
-
-**Is it safe to run twice?** Yes. Running it again only fixes settings that have drifted.
-
-**Can I undo it?** There is no automatic undo. Take a VM snapshot or backup before applying.
-
-**Does it need internet access?** Only to install `ansible-core` the first time, from your normal RHEL repositories.
-
-**Is this the official CIS tool?** No. It is an independent open-source implementation. See the disclaimer below.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the project architecture.
 
 ## Authorship and sources
 
@@ -193,13 +176,12 @@ My contribution is the software implementation and integration described in this
 
 ## Contributing / maintainers
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-Bugs and requests: [open an issue](https://github.com/balaramaa/rhel-cis-benchmark/issues).
-If this saved you time, please ⭐ the repository.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+
+For non-sensitive bugs and requests, [open an issue](https://github.com/balaramaa/rhel-cis-benchmark/issues). Do not include credentials, confidential configurations, internal scan results, or other sensitive information in public issues.
 
 ## Disclaimer
 
-Not affiliated with or endorsed by the Center for Internet Security® (CIS). CIS® and CIS Benchmarks™ are
-trademarks of CIS. This project stores only control IDs and titles for reference; get the official benchmarks
-from [cisecurity.org](https://www.cisecurity.org/cis-benchmarks). Hardening can affect applications — test before
-production use. MIT License, provided without warranty.
+Not affiliated with or endorsed by the Center for Internet Security® (CIS). CIS® and CIS Benchmarks™ are trademarks of CIS. Obtain the official benchmarks from [cisecurity.org](https://www.cisecurity.org/cis-benchmarks).
+
+This is an independent implementation. Hardening can affect applications and availability; test before production use and review exceptions and recovery procedures. MIT License, provided without warranty. References to products or organizations do not imply endorsement or certification.
