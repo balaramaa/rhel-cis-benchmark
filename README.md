@@ -139,7 +139,11 @@ ansible-playbook site.yml                              # apply - each server get
 ```
 
 ---
-
+| OS and exact version  | Profile tested         | Test date | Result or limitation |
+| --------------------- | ---------------------- | --------- | -------------------- |
+| RHEL9                 | Level 1                | 08/14/2026| Success              |
+| RHEL8                 | Level 1                | 08/27/2026| Success              |
+| RHEL10                | Level 1                | 09/18/2026| Success              |
 ## Repository layout
 
 ```
