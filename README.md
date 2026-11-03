@@ -5,9 +5,9 @@ Automatically apply the **CIS Benchmark** to **Red Hat Enterprise Linux 8, 9 and
 
 | Your OS | CIS Benchmark | Controls | Download |
 |---|---|---|---|
-| **RHEL 8** / Rocky 8 / Alma 8 | CIS RHEL 8 Benchmark **v4.0.0** | 322 | [cis-rhel8.tar.gz](https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz) |
-| **RHEL 9** / Rocky 9 / Alma 9 | CIS RHEL 9 Benchmark **v3.0.0** | 352 | [cis-rhel9.tar.gz](https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz) |
-| **RHEL 10** / Rocky 10 / Alma 10 | CIS RHEL 10 Benchmark **v1.0.1** | 328 | [cis-rhel10.tar.gz](https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz) |
+| **RHEL 8** / Rocky 8 / Alma 8 | CIS RHEL 8 Benchmark **v4.0.0** | 322 | [cis-rhel8.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz) |
+| **RHEL 9** / Rocky 9 / Alma 9 | CIS RHEL 9 Benchmark **v3.0.0** | 352 | [cis-rhel9.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz) |
+| **RHEL 10** / Rocky 10 / Alma 10 | CIS RHEL 10 Benchmark **v1.0.1** | 328 | [cis-rhel10.tar.gz](https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz) |
 
 Each download contains **only** the settings for that OS version.
 
