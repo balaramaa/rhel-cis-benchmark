@@ -21,7 +21,7 @@ Each download contains **only** the settings for that OS version.
 ### RHEL 8
 
 ```bash
-curl -LO https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz
+curl -LO https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel8.tar.gz
 tar xzf cis-rhel8.tar.gz && cd rhel8
 sudo ./apply.sh --check     # 1. preview the changes (nothing is changed)
 sudo ./apply.sh             # 2. apply the CIS benchmark
@@ -31,7 +31,7 @@ sudo reboot                 # 3. reboot to activate everything
 ### RHEL 9
 
 ```bash
-curl -LO https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz
+curl -LO https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel9.tar.gz
 tar xzf cis-rhel9.tar.gz && cd rhel9
 sudo ./apply.sh --check
 sudo ./apply.sh
@@ -41,7 +41,7 @@ sudo reboot
 ### RHEL 10
 
 ```bash
-curl -LO https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz
+curl -LO https://github.com/balaramaa/rhel-cis-benchmark/releases/latest/download/cis-rhel10.tar.gz
 tar xzf cis-rhel10.tar.gz && cd rhel10
 sudo ./apply.sh --check
 sudo ./apply.sh
@@ -51,7 +51,7 @@ sudo reboot
 ### Don't know your version? Use the auto-detect script
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark.git
+git clone https://github.com/balaramaa/rhel-cis-benchmark.git
 cd rhel-cis-benchmark
 sudo ./apply.sh --check
 sudo ./apply.sh
