@@ -139,6 +139,7 @@ ansible-playbook site.yml                              # apply - each server get
 ```
 
 ---
+Tested environments
 | OS and exact version  | Profile tested         | Test date | Result or limitation |
 | --------------------- | ---------------------- | --------- | -------------------- |
 | RHEL9                 | Level 1                | 08/14/2026| Success              |
@@ -176,7 +177,11 @@ rhel-cis-benchmark/
 **Is this the official CIS tool?** No. It is an independent open-source implementation. See the disclaimer below.
 
 ---
-
+Authorship and sources
+1. I have developed entire code in YAML,Python and Shell scripting
+2. I have used RedHat Ansible documentation
+3. I took the base reference from CIS benchmark documentation and improved with my real time Linux engineering experience
+   
 ## Contributing / maintainers
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
