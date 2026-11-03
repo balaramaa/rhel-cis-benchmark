@@ -185,12 +185,12 @@ rhel-cis-benchmark/
 
 **Is this the official CIS tool?** No. It is an independent open-source implementation. See the disclaimer below.
 
-Authorship and sources
----
-1. I have developed entire code in YAML,Python and Shell scripting
-2. I have used RedHat Ansible documentation
-3. I took the base reference from CIS benchmark documentation and improved with my real time Linux engineering experience
-   
+## Authorship and sources
+
+This implementation was developed by Balaramakrishna Alti using YAML, Python, and shell scripting. Development referenced Red Hat Ansible documentation and the applicable CIS Benchmark documentation. No code was copied or adapted from other repositories.
+
+My contribution is the software implementation and integration described in this repository, informed by my practical Linux engineering experience. I do not claim authorship of Ansible or the CIS Benchmarks.
+
 ## Contributing / maintainers
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
