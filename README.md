@@ -137,13 +137,23 @@ cp inventory/hosts.yml.example inventory/hosts.yml     # list your servers
 ansible-playbook site.yml --check --diff               # preview
 ansible-playbook site.yml                              # apply - each server gets its own version
 ```
-Tested environments
----
-| OS and exact version  | Profile tested         | Test date | Result or limitation |
-| --------------------- | ---------------------- | --------- | -------------------- |
-| RHEL9                 | Level 1                | 08/14/2026| Success              |
-| RHEL8                 | Level 1                | 08/27/2026| Success              |
-| RHEL10                | Level 1                | 09/18/2026| Success              |
+
+## Lab testing
+
+The implementation was tested in the author's lab on RHEL 8, RHEL 9, and RHEL 10. The playbook completed without execution errors, and the applied configuration settings were checked.
+
+Qualys was used separately to assess the resulting configurations. Results included passed and skipped checks. Some required configurations were already present before execution; those existing configurations are not attributed to this playbook.
+
+These results describe the tested lab environments, not a guarantee that every control will pass on other systems. Skipped checks are not counted as passed checks.
+
+The following dates and results are reported by the author. OS minor versions, scan scores, and individual check counts are not specified in this summary.
+
+| OS major version | Profile reported | Test date reported | Test summary |
+|---|---|---|---|
+| RHEL 9 | Level 1 | August 14, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
+| RHEL 8 | Level 1 | August 27, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
+| RHEL 10 | Level 1 | September 18, 2026 | Completed without execution errors; settings checked; Qualys assessment included passed and skipped checks |
+
 ## Repository layout
 
 ```
