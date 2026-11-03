@@ -132,7 +132,7 @@ sudo oscap xccdf eval --profile cis_server_l1 --report cis-report.html \
 From any machine with Ansible installed:
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark.git && cd rhel-cis-benchmark
+git clone https://github.com/balaramaa/rhel-cis-benchmark.git && cd rhel-cis-benchmark
 cp inventory/hosts.yml.example inventory/hosts.yml     # list your servers
 ansible-playbook site.yml --check --diff               # preview
 ansible-playbook site.yml                              # apply - each server gets its own version
