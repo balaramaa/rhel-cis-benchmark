@@ -194,7 +194,7 @@ Authorship and sources
 ## Contributing / maintainers
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-Bugs and requests: [open an issue](https://github.com/YOUR_GITHUB_USER/rhel-cis-benchmark/issues).
+Bugs and requests: [open an issue](https://github.com/balaramaa/rhel-cis-benchmark/issues).
 If this saved you time, please ⭐ the repository.
 
 ## Disclaimer
